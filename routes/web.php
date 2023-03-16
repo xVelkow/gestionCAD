@@ -13,7 +13,7 @@ use App\Http\Controllers\MemberController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/{path?}', function () {
     return view('welcome');
 });
 Route::resource('Members',MemberController::class);
