@@ -3,109 +3,79 @@
 namespace App\Http\Controllers;
 
 use App\Models\Session;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Illuminate\Support\Facades\Validator;
 use App\http\Requests\SessionRequest;
 
 class SessionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
+    public function index(){
         $sessions = Session::all();
-
-        return view('Session.index', compact('sessions'));
+        return response()->json($sessions);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
-        return view('Session.create');
-        
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(SessionRequest $request)
-    {
-        $validated = $request->validated();
+    public function store(SessionRequest $request){
+        // $validated = $request->validated();
     
-        try {
-            $sessioncreate = Session::create([
-                'nomSession' => $request->nomSession
-            ]);
+        // try {
+        //     $sessioncreate = Session::create([
+        //         'nomSession' => $request->nomSession
+        //     ]);
             
-            if ($sessioncreate) {
-                return redirect()->route('sessions.index');
+        //     if ($sessioncreate) {
+        //         return redirect()->route('sessions.index');
+        //     }
+        // } catch(Exception $e) {
+        //     $e = 'Something went wrong';
+        //     return redirect()->route('sessions.index', compact('e'));
+        // }
+        try{
+            $session = new Session();
+            $session->refSession = $request->refSession;
+            if($session->save()){
+                return response()->json(['isGood'=>true]);
             }
-        } catch(Exception $e) {
-            $e = 'Something went wrong';
-            return redirect()->route('sessions.index', compact('e'));
+        }catch(Exception $error){
+            return response()->json(['isGood'=>false]);
         }
     
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show($idSession)
-    {
-        $session = Session::find($idSession);
-
-        return view('Session\show',compact('session'));
+    public function show(Session $session, $id){
+        $session = Session::find($id);
+        return response()->json($session);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($idSession)
-    {
-       
-        try{
-         
-           
-            $session = Session::find($idSession);
-                if($session){
-                return view('Session\edit', compact('session'));}  }
-        catch(Exception $e) {
-            return $e;}
-      
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(SessionRequest $request,$idSession)
+    public function update(SessionRequest $request,$id)
     { 
         
-        $validated = $request->validated();
-        
-        $session = Session::findOrFail($idSession);
-        $session->nomSession = $request->input('nomSession');
-        $session->save();
+        // $validated = $request->validated();
+        try{
+            $session = Session::find($id);
+            $session->refSession = $request->refSession;
+            if($session->save()){
+                return response()->json(['isGood'=>true]);
+            }
+        }catch(Exception $error){
+            return response()->json(['isGood'=>false]);
+        }
 
-        return redirect()->route('sessions.show', ['session' => $idSession]);
+        // return redirect()->route('sessions.show', ['session' => $id]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy( $idSession){
-        $session = Session::findOrFail($idSession);
+    public function destroy($id){
+        // $session = Session::findOrFail($idSession);
 
-    if(Session::destroy($idSession)){
-        return redirect(route('sessions.index'));
-    } else {
-        $e = "something-went-wrong";
-        return redirect(route('sessions.index',compact('e')));
+        // if(Session::destroy($idSession)){
+        //     return redirect(route('sessions.index'));
+        // } else {
+        // $e = "something-went-wrong";
+        // return redirect(route('sessions.index',compact('e')));
+        try{
+            if(Session::destroy($id)){
+                return response()->json(['isGood'=>true]);
+            }
+        }catch(Exception $error){
+            return response()->json(['isGood'=>false]);
+        }
     }
 
-}
 }

@@ -18,10 +18,10 @@ class MemberRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(Request $r): array
+    public function rules(Request $request): array
     {
         return [
-            $r->validate([
+            $request->validate([
                 'cefMember'=>['bail','string','required','between:13,13','alpha_num'],
                 'fullNameMember'=>['bail','string','required','max:100'],
                 'emailMember'=>['bail','email','ends_with:@ofppt-edu.ma','required','max:100'],

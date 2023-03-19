@@ -10,8 +10,8 @@ class Session extends Model
     use HasFactory;
     public $timestamps = false;
     protected $fillable = [
-    'nomSession',
-    'idSession'
-];
+        'refSession',
+        'idSession'
+    ];
     protected $primaryKey = 'idSession';
 }

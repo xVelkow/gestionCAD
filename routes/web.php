@@ -18,5 +18,4 @@ Route::get('/{path?}', function () {
     return view('welcome');
 })->where('path','.*');
 // Route::resource('Members',MemberController::class);
-
-Route::resource('sessions', SessionController::class);
+// Route::resource('sessions', SessionController::class);

@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('sessions', function (Blueprint $table) {
             $table->increments('idSession')->primary()->unique()->nullable(false);
-            $table->string('nomSession')->unique()->nullable();
-            
+            $table->string('refSession')->unique()->nullable(false);
         });
     }
 

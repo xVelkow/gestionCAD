@@ -22,9 +22,12 @@ class SessionRequest extends FormRequest
      */
     public function rules(Request $request): array
     {
-        return [
-            'nomSession' => ['required', 'regex:/^\d{4}-\d{4}$/', Rule::unique('sessions')]
-        ];
+        return $request->validate([
+            'refSession' => ['required', 'regex:/^\d{4}-\d{4}$/', Rule::unique('sessions')]
+        ]);
+        // return [
+        //     'nomSession' => ['required', 'regex:/^\d{4}-\d{4}$/', Rule::unique('sessions')]
+        // ];
 
     }
       /**
