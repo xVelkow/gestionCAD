@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->string('cefMember')->primary()->unique()->nullable(false);
-            $table->string('firstNameMember')->nullable(false);
-            $table->string('lastNameMember')->nullable(false);
+            $table->string('fullNameMember')->nullable(false);
             $table->string('groupMember')->nullable(false);
             $table->string('emailMember')->unique()->nullable(false);
             $table->string('passwordMember')->nullable(false);

@@ -15,5 +15,5 @@ use App\Http\Controllers\MemberController;
 
 Route::get('/{path?}', function () {
     return view('welcome');
-});
-Route::resource('Members',MemberController::class);
+})->where('path','.*');
+// Route::resource('Members',MemberController::class);
