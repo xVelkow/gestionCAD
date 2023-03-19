@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\SessionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,4 +17,8 @@ use App\Http\Controllers\MemberController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('Members',MemberController::class);
+
+Route::get('/', function () {
+    return view('entree');
+});
+Route::resource('sessions', SessionController::class);
