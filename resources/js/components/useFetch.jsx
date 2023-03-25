@@ -8,10 +8,10 @@ const useFetch = (method, request) =>{
     useEffect(()=>{
         switch(method){
             case 'GET':
-                axios.get(`http://127.0.0.1:8000/api/${request}`)
+                axios.get(`http://127.0.0.1:8000/api/${request}/`)
                 .then(response=>{
                     if(response.statusText !== "OK" || typeof(response.data) !== 'object'){
-                        throw Error('Could not fetch data');
+                        throw Error(`Could not fetch data from ${request}`);
                     } 
                     return response.data;
                 })

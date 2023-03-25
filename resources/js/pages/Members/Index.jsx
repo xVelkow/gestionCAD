@@ -6,31 +6,21 @@ import axios from "axios";
 const Index = ({section}) =>{
     const [deleteTarget,setDeleteTarget] = useState(null);
     const [deleteChecker,setDeleteChecker] = useState(false);
-    const {data = [],isPending,error} = useFetch('GET',section);
+    const {data = {},isPending,error} = useFetch('GET',section);
     const navigate = useNavigate();
     useEffect(()=>{
         if(deleteChecker){
-            axios.delete(`http://127.0.0.1:8000/api/${section}/${deleteTarget}`)
+            axios.delete(`/api/${section}/${deleteTarget}`)
             .then(response=>{
                 if(response.statusText !== 'OK' || typeof(response.data) !== 'object'){
                     throw Error('Could not delete the member');
                 }else{
-                    switch(section){
-                        case 'Members':
-                            data.forEach((element,index) => {
-                                element.cefMember === deleteTarget ?data.splice(index,1):null
-                            });
-                            break;
-                        case 'Sessions':
-                            //some code
-                            break;
-                        // the rest of cases
-                    }
+                    data.forEach((element,index)=> element.id === deleteTarget ? data.splice(index,1) : null);
                     return response.data;
                 }
             })
-            .then(mydata=>{
-                console.log(mydata.isGood);
+            .then(data=>{
+                console.log(data.isGood);
                 setDeleteTarget(null);
                 setDeleteChecker(false);
             })
@@ -50,81 +40,58 @@ const Index = ({section}) =>{
             {/* Response ready */}
             { (data.length > 0 && !isPending) &&
             <>
-                <Link to='/Dashboard' >Go to Dashboard</Link>
+                <ul>
+                    <li><Link to='/Dashboard' >Go to Dashboard</Link></li>
+                    <li><Link to='Create' >Create new {section}</Link></li>
+                </ul>
                 <div className="container">
                     <table className="data-wrapper">
                         <thead className="data-header">
-                            {/* Header columns for members */}
-                            { section === 'Members' && 
-                                <tr className="data-row">
-                                    <th>Full Name</th>
-                                    <th>Department</th>
-                                    <th>Role</th>
-                                    <th colSpan='3' className="data-action">Actions</th>
-                                </tr>
-                            }
-                            {/* Header columns for Sessions */}
-                            { section === 'Sessions' && 
-                                <tr className="data-row">
-                                    <th>Session</th>
-                                    <th colSpan='3' className="data-action">Actions</th>
-                                </tr>
-                            }
+                            <tr className="data-row" key='headers' >
+                                {
+                                    Object.keys(data[0]).map(key=>{return(
+                                        key !== 'id'?<th key={key}>{key}</th>:null
+                                    )})
+                                }
+                                <th colSpan='3' className="data-action">Action</th>
+                            </tr>
                         </thead>
                         <tbody className="data-body">
-                            {/* Members body : 71-93 */}
-                            { section === 'Members' &&
-                                data.map(member=>{return(
-                                    <tr className="data-row" key={member.cefMember}>
-                                        <td>{member.fullNameMember}</td>
-                                        <td>{member.departmentMember}</td>
-                                        <td>{member.roleMember}</td>
-                                        <td><button onClick={()=>navigate(`/Dashboard/Members/${member.cefMember}`)}>More</button></td>
-                                        <td><button onClick={()=>navigate(`${member.cefMember}/Edit`)}>Edit</button></td>
-                                        <td>
+                            {
+                                data.map(element=>{return(
+                                    <tr className="data-row" key={element.id}>
+                                    {Object.values(element).map(value=>{return(
+                                        element.id != value ? <td key={value}>{value}</td> : null
+                                )})}
+                                        <td key='show'><button onClick={()=>navigate(`/Dashboard/${section}/${element.id}`)}>More</button></td>
+                                        <td key='edit'><button onClick={()=>navigate(`${element.id}/Edit`)}>Edit</button></td>
+                                        <td key='delete'>
                                             <button onClick={
                                                 ()=>{
-                                                    setDeleteTarget(member.cefMember);
+                                                    setDeleteTarget(element.id);
                                                     setDeleteChecker(true);
-                                                }
-                                            }>
-                                                Delete
+                                                }}>
+                                                    Delete
                                             </button>
                                         </td>
                                     </tr>
                                 )})
                             }
-                            {/* End of members body : 71-93 */}
-                            {/* Sessions body 98-118 */}
-                            { section === 'Sessions' &&
-                                data.map(session=>{return(
-                                    <tr className="data-row" key={session.idSession}>
-                                        <td>{session.nameSession}</td>
-                                        <td><button onClick={()=>navigate(`/Dashboard/Members/${session.idSession}`)}>More</button></td>
-                                        <td><button onClick={()=>navigate(`${session.idSession}/Edit`)}>Edit</button></td>
-                                        <td>
-                                            <button onClick={
-                                                ()=>{
-                                                    setDeleteTarget(session.idSession);
-                                                    setDeleteChecker(true);
-                                                }
-                                            }>
-                                                Delete
-                                            </button>
-                                        </td>
-                                    </tr>
-                                )})
-                            }
-                            {/* End of sessions body 98-118 */}
                         </tbody>
                     </table>
                 </div>
-            </>}
-
+            </>
+            }
             {/* Could not find the needed data */}
-            { (data.length === 0 && !isPending) &&
+            { (data.length === 0 && !isPending && !error) &&
             <>
-                <h1>There is no {section}</h1>
+                <h1>There are no {section}</h1>
+            </>
+            }
+            {/* Got some errors */}
+            { error &&
+            <>
+                <h1>{error}</h1>
             </>
             }
         </> 

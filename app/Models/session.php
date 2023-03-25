@@ -11,7 +11,6 @@ class Session extends Model
     public $timestamps = false;
     protected $fillable = [
         'refSession',
-        'idSession'
     ];
-    protected $primaryKey = 'idSession';
+    // protected $primaryKey = 'idSession';
 }

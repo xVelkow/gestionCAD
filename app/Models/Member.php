@@ -11,7 +11,7 @@ class Member extends Model
 
     protected $keyType = 'string';
     public $incrementing = false;
-    protected $primaryKey = 'cefMember';
+    // protected $primaryKey = 'cefMember';
     public $timestamps = false;
     protected $hidden = ['passwordMember'];
 

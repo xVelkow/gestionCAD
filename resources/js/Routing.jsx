@@ -11,11 +11,13 @@ const Routing = () =>{
             <Routes>
                 <Route path='/Dashboard' element={<Dashboard />} />
                 <Route path='/Dashboard/Members' element={<Index section='Members' />} />
-                <Route path='/Dashboard/Members/:id' element={<Show />} />
-                <Route path='/Dashboard/Members/Create' element={<Create />} />
+                <Route path='/Dashboard/Members/:id' element={<Show section='Members' />} />
+                <Route path='/Dashboard/Members/Create' element={<Create section='Members' />} />
                 <Route path='/Dashboard/Members/:id/Edit' element={<Edit />} />
 
                 <Route path='/Dashboard/Sessions' element={<Index section='Sessions' />} />
+                <Route path='/Dashboard/Sessions/:id' element={<Show section='Sessions' />} />
+                <Route path='/Dashboard/Sessions/Create' element={<Create section='Sessions' />} />
 
                 <Route path='*' element={<NotFound />} />
             </Routes>

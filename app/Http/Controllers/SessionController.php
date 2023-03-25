@@ -10,6 +10,7 @@ class SessionController extends Controller
     public function index(){
         $sessions = Session::all();
         return response()->json($sessions);
+        // return response()->json(['hey'=>'sup']);
     }
 
     public function store(SessionRequest $request){

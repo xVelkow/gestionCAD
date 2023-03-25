@@ -5,7 +5,11 @@ const Dashboard = () =>{
     return(
         <>
             <h1>Dashboard</h1>
-            <Link to='/Dashboard/Members'>go to Members</Link>
+            <ul>
+                <li><Link to='/Dashboard/Members'>go to Members</Link></li>
+                <li><Link to='/Dashboard/Sessions'>go to Sessions</Link></li>
+
+            </ul>
         </>
     );
 }

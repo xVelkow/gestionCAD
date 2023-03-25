@@ -12,7 +12,7 @@ use Exception;
 class MemberController extends Controller
 {
     public function index(){
-        $columns = ['cefMember','fullNameMember','departmentMember','roleMember'];
+        $columns = ['id','fullNameMember','departmentMember','roleMember'];
         $members = Member::all($columns);
         return response()->json($members);
     }
@@ -21,7 +21,7 @@ class MemberController extends Controller
         try{
             $s = 'salam';
             $member = new Member();
-            $member->cefMember = $request->cefMember;
+            $member->id = $request->id;
             $member->fullNameMember = $request->fullNameMember;
             $member->groupMember = $request->groupMember;
             $member->passwordMember = Hash::make($s);
@@ -36,14 +36,14 @@ class MemberController extends Controller
         }
     }
 
-    public function show(Member $member, $cef){
-            $member = Member::find($cef)->toArray();
+    public function show(Member $member, $id){
+            $member = Member::find($id)->toArray();
             return response()->json($member);
     }
-    public function update(MemberRequest $request, Member $member,$cef){
+    public function update(MemberRequest $request, Member $member,$id){
         try{
-            $member = Member::find($cef);
-            $member->cefMember = $request->cefMember;
+            $member = Member::find($id);
+            $member->id = $request->id;
             $member->fullNameMember = $request->fullNameMember;
             $member->groupMember = $request->groupMember;
             $member->emailMember = $request->emailMember;
@@ -57,9 +57,9 @@ class MemberController extends Controller
         }
     }
 
-    public function destroy(Member $member,$cef){
+    public function destroy(Member $member,$id){
         try{
-            if(Member::destroy($cef)){
+            if(Member::destroy($id)){
                 return response()->json(['isGood'=>true]);
             }
         }catch(Exception $error){

@@ -23,10 +23,9 @@ const Edit = () =>{
         setRole('');
     }
     const check = () =>{
-		if(cef,fullName){
 			const formData = new FormData();
             formData.append('_method', 'PATCH');
-			formData.append('cefMember',cef);
+			formData.append('id',cef);
 			formData.append('fullNameMember',fullName);
 			formData.append('groupMember',group);
 			formData.append('emailMember',email);
@@ -34,7 +33,6 @@ const Edit = () =>{
 			formData.append('roleMember',role);
 			setChecked(true);
 			return formData;
-		}
 	}
     useEffect(()=>{
         if(!received){
@@ -47,7 +45,7 @@ const Edit = () =>{
                 }
             })
             .then(data=>{
-                setCef(data.cefMember);
+                setCef(data.id);
                 setFullName(data.fullNameMember);
                 setGroup(data.groupMember);
                 setEmail(data.emailMember);
@@ -67,15 +65,11 @@ const Edit = () =>{
 				if(res.statusText !== "OK" || typeof(res.data) !== 'object'){
 					throw Error('Could not send data');
 				}else{
-					return res.data
+					navigate(`/Dashboard/Members/${cef}`);
 				}
-			})
-			.then(data=>{
-                navigate(`/Dashboard/Members/${cef}`);
 			})
 			.catch(err=>{
 				console.clear();
-				console.log(err.response);
 				setChecked(false);
 			});
 		}
@@ -90,7 +84,7 @@ const Edit = () =>{
 					<div className="form-wrapper">
 						<div className="form-slicer">
 							<div className="input-wrapper">
-								<input type="text" className="input-field" id="cef" value={cef} onChange={(e)=>setCef(e.target.value)} autoComplete="off" required/>
+								<input type="text" className="input-field" id="fname" value={cef} onChange={(e)=>setCef(e.target.value)} autoComplete="off" required/>
 								<label htmlFor="" className="input-content">
 									<span className="input-name">Cef</span>
 								</label>
