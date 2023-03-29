@@ -21,7 +21,7 @@ const Edit = ({section}) =>{
 	const [object,setObject] = useState({})
 	const [isReady,setIsReady] = useState(false);
   	const [showCase,setShowCase] = useState({state:''});
-	const {data = {},isPending,error} = useFetch('GET',`${section}/${id}`);
+	const {data = {},isPending,error} = useFetch(`${section}/${id}`);
 	// handle inputs
 	const fillInputs = () =>{
 		switch(section){
@@ -89,8 +89,19 @@ const Edit = ({section}) =>{
 						}
 						break;
 					case 'Sessions':
-						setChecked(true);
-						setIsReady(true);
+						const pattern = /^\d{4}-\d{4}$/;
+						if(pattern.test(object.Reference)){
+							const [sec1, sec2] = object.Reference.split('-');
+							if((+sec1) + 1 === (+sec2)){
+								setChecked(true);
+								setIsReady(true);
+							}else{
+							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
+							}
+						}
+						else{
+							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
+						}
 						break;
 				}
 			}
