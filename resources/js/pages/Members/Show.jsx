@@ -1,9 +1,19 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import useFetch from "../../components/useFetch";
+import { useEffect, useState } from "react";
+import useDestroy from "../../components/useDestroy";
 const Show = ({section}) =>{
     const navigate = useNavigate();
     const {id} = useParams();
-    const {data = {},isPending,error} = useFetch('GET',`${section}/${id}`);
+    const [deleteChecker,setDeleteChecker] = useState(false);
+    const {data = {},isPending,error} = useFetch(`${section}/${id}`);
+    
+    // redirect when deleted
+    useEffect(()=>{
+        if(deleteChecker){
+            navigate(`/Dashboard/${section}`);
+        }
+    },[deleteChecker])
     return(
         <>
             {isPending &&
@@ -13,7 +23,7 @@ const Show = ({section}) =>{
             }
             { (data.length !== 0 && !isPending) &&
                 <>
-                    <Link to='/Dashboard/Members'>Go back</Link>
+                    <Link to={`/Dashboard/${section}`}>Go back</Link>
                     <div className="table-holder">
                         <div className="container">
                             <table className="data-wrapper">
@@ -35,7 +45,14 @@ const Show = ({section}) =>{
                                 </tbody>
                                 <tfoot className="data-action">
                                     <tr className='data-row'>
-                                        <td><Link className="button delete-button">delete</Link></td>
+                                        <td><button onClick={
+                                                ()=>{
+                                                    // setDeleteTarget(data.id);
+                                                    setDeleteChecker(true);
+                                                    useDestroy(section,data.id);
+                                                }}>
+                                                    Delete
+                                            </button></td>
                                         <td><Link to={`Edit`} className='button edit-button'>edit</Link></td>
                                     </tr>
                                 </tfoot>

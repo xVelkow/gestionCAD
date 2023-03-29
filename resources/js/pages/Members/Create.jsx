@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import { elementTypeAcceptingRef } from "@mui/utils";
+import { useNavigate } from "react-router-dom";
 const Create = ({section}) =>{
-	const [checked,setChecked] = useState(false);
-	
+	const navigate = useNavigate();
 	const obj = [
-		['Members',[
+		['Members',
+			[
 				'START',['Cef','Name','Group']
 			],
 			[
@@ -15,43 +14,35 @@ const Create = ({section}) =>{
 		],
 		['Sessions','Reference']
 	];
-	const needSlice = ['Members'];
+	
+	const [checked,setChecked] = useState(false);
+	const needSlice = ['Members']; // whatever section needs to slice form
 	const [object,setObject] = useState({})
 	const [isReady,setIsReady] = useState(false);
-	const [isDone,setIsDone] = useState(false);
-	const [showCase,setShowCase] = useState({state:''});
-    // const check = () =>{
-	// 	if(cef,fullName){
-	// 		const formData = new FormData();
-	// 		formData.append('id',cef);
-	// 		formData.append('fullNameMember',fullName);
-	// 		formData.append('groupMember',group);
-	// 		formData.append('emailMember',email);
-	// 		formData.append('departmentMember',department);
-	// 		formData.append('roleMember',role);
-	// 		setChecked(true);
-	// 		return formData;
-	// 	}
-	// }
-	// const check = ()=>{
-	// 	// console.log(object[obj[0][1][1][0]])
-	// 	obj.forEach(sections=>{
-	// 		section !== sections[0] 
-	// 		? null
-	// 		: sections.forEach(specificSection=>{
-	// 			!needSlice.includes(section)
-	// 			? section === specificSection ? null : isEmpty(object[specificSection],specificSection)
-	// 			: section === specificSection ? null : specificSection.forEach(side=>{
-	// 				side === 'START' ? null : side.forEach(element=>{
-	// 					isEmpty(object[element],element)
-	// 				})
-	// 			})
-	// 		})
-	// 	})
-	// }
-	// const isEmpty = (target,label)=>{
-	// 	target == ''? console.log(`${label} field is empty`) : console.log('good')
-	// }
+  	const [showCase,setShowCase] = useState({state:''});
+
+	// formData
+    const send = () =>{
+		if(isReady){
+			const formData = new FormData();
+			switch(section){
+				case 'Members':
+					formData.append('id',object.Cef);
+					formData.append('fullNameMember',object.Name);
+					formData.append('groupMember',object.Group);
+					formData.append('emailMember',object.Email);
+					formData.append('departmentMember',object.Department);
+					formData.append('roleMember',object.Role);
+					break;
+				case 'Sessions':
+					formData.append('refSession',object.Reference);
+					break;
+				}
+				return formData;
+		}
+	}
+
+	// fill object
 	useEffect(()=>{
 		obj.map(sections=>{
 			sections[0] !== section
@@ -77,11 +68,11 @@ const Create = ({section}) =>{
 			})
 		})
 	},[]);	
-	// const check = () =>{}
+
+	// validation
 	const check = async () =>{
 		const allEmpty = await Object.values(object).every(v=>v == '');
 		if(allEmpty){
-			// console.log('all are empty')
 			setShowCase({
 				state: 'alert-fail',
 				message: 'Please fill the fields first'
@@ -89,17 +80,11 @@ const Create = ({section}) =>{
 		}else{
 			const isEmpty = await Object.values(object).some(v=>v == '');
 			if(isEmpty){
-				// console.log('some fields are empty')
 				setShowCase({
 					state: 'alert-fail',
 					message: 'Input fields should not be empt'
 				});
 			}else{
-				// console.log('all fields are filled')
-				// setShowCase({
-				// 	state: 'success',
-				// 	message: 'Added Successfully'
-				// });
 				switch(section){
 					case 'Members':
 						if(object.Cef.match(/^[0-9]{13}$/)){
@@ -107,7 +92,8 @@ const Create = ({section}) =>{
 							const domainTest = domain.test(object.Email.toLowerCase());
 							if(domainTest){
 								if(object.Email.match(/\@/g).length === 1){
-									setShowCase({state:'alert-success',message:'Added successfully'});
+									setChecked(true);
+									setIsReady(true);
 								}else{
 									setShowCase({state:'alert-fail',message:'Email should contain only one @'});
 								}
@@ -117,8 +103,21 @@ const Create = ({section}) =>{
 						}else{
 							setShowCase({state:'alert-fail',message:'Cef should contain exactly 13 digits'});
 						}
-						
-						
+						break;
+					case 'Sessions':
+						const pattern = /^\d{4}-\d{4}$/;
+						if(pattern.test(object.Reference)){
+							const [sec1, sec2] = object.Reference.split('-');
+							if((+sec1) + 1 === (+sec2)){
+								setChecked(true);
+								setIsReady(true);
+							}else{
+							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
+							}
+						}
+						else{
+							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
+						}
 						break;
 				}
 			}
@@ -127,6 +126,8 @@ const Create = ({section}) =>{
 			setShowCase(showCase=>({...showCase,state:''}));
 		},2000);
 	}
+
+	// handle inputs
 	const handle= (e)=>{
 		setObject(object=>({
 			...object,
@@ -134,64 +135,31 @@ const Create = ({section}) =>{
 		}))
 	}
 
-	// const check = ()=>{
-	// 	obj.forEach(element => {
-	// 		element[0] !== section ? null : element.forEach(specificElement => {
-	// 			if(specificElement !== section){
-	// 				if(typeof(specificElement) !== 'object'){
-	// 					if(object[specificElement] == '' || object[specificElement] == undefined){
-	// 						console.log('bad')
-	// 						setIsReady(false);
-	// 						return false;
-	// 					}else{
-	// 						console.log('good')
-	// 						setIsReady(true);
-	// 					}
-	// 				}else{
-	// 					specificElement.forEach(target => {
-	// 						if(target !== 'START'){
-	// 							target.forEach(specificTarget => {
-	// 								if(specificTarget === ''){
-	// 									console.log('not run')
-	// 									setIsReady(false);
-	// 									return false;
-	// 								}else{
-	// 									console.log('not run')
-
-	// 									setIsReady(true);
-	// 								}
-	// 							});
-	// 						}
-	// 					});
-	// 				}
-	// 			} 
-	// 		});
-	// 	});
-	// }
-	// useEffect(()=>{
-	// 	if(checked){
-	// 		const formData = check();
-	// 		axios.post('http://127.0.0.1:8000/api/Members',formData)
-	// 		.then(res=>{
-	// 			if(res.statusText !== "OK" || typeof(res.data) !== 'object'){
-	// 				throw Error('Could not send data');
-	// 			}else{
-	// 				return res.data
-	// 			}
-	// 		})
-	// 		.then(data=>{
-	// 			console.log(data);
-	// 			setCef('');
-	// 			setFullName('');
-	// 			setChecked(false);
-	// 		})
-	// 		.catch(err=>{
-	// 			console.clear();
-	// 			console.log(err.response);
-	// 			setChecked(false);
-	// 		});
-	// 	}
-	// },[checked])
+	// send data
+	useEffect(()=>{
+		const formData = send();
+		if(checked){
+			axios.post(`http://127.0.0.1:8000/api/${section}`,formData)
+			.then(res=>{
+				if(res.statusText !== "OK" || typeof(res.data) !== 'object'){
+					throw Error('Could not send data');
+				}else{
+					return res.data
+				}
+			})
+			.then(data=>{
+				console.log(data);
+				setIsReady(false);
+				setChecked(false);
+			})
+			.catch(err=>{
+				console.clear();
+				console.log(err.response);
+				setIsReady(false);
+				setChecked(false);
+			});
+		}
+	},[checked])
 	return(
 		<>
 			<div className={`alert ${showCase.state}`}>
@@ -241,10 +209,6 @@ const Create = ({section}) =>{
 															key={`${labelValue}.inputField`} 
 															type="text" className="input-field" 
 															id="cef" value={object[labelValue] || ''} 
-															// onChange={(e)=>setObject(object=>({
-															// 	...object,
-															// 	[labelValue] : e.target.value
-															// }))} 
 															onChange={e=>{handle(e)}}
 															autoComplete="off" 
 															required
@@ -263,7 +227,7 @@ const Create = ({section}) =>{
 							}
 						</div>
 						<div className={needSlice.includes(section) ? "form-actions" : "form-actions1"}>
-			  				<button type='reset' className='action-button cancel-button'>Cancel</button>
+			  				<button className='action-button cancel-button' onClick={()=>{navigate(`/Dashboard/${section}`)}}>Cancel</button>
 			  				<button type='submit' className='action-button send-button' onClick={check}>Create</button>
 			  			</div>
 					</div>

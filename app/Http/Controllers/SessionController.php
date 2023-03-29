@@ -28,6 +28,7 @@ class SessionController extends Controller
         //     $e = 'Something went wrong';
         //     return redirect()->route('sessions.index', compact('e'));
         // }
+
         try{
             $session = new Session();
             $session->refSession = $request->refSession;

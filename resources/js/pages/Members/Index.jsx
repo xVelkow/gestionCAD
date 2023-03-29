@@ -1,34 +1,21 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../../components/useFetch";
-import axios from "axios";
+import useDestroy from "../../components/useDestroy";
 
 const Index = ({section}) =>{
     const [deleteTarget,setDeleteTarget] = useState(null);
     const [deleteChecker,setDeleteChecker] = useState(false);
-    const {data = {},isPending,error} = useFetch('GET',section);
+    const {data = {},isPending,error} = useFetch(section);
     const navigate = useNavigate();
+
+    // reloading data
     useEffect(()=>{
         if(deleteChecker){
-            axios.delete(`/api/${section}/${deleteTarget}`)
-            .then(response=>{
-                if(response.statusText !== 'OK' || typeof(response.data) !== 'object'){
-                    throw Error('Could not delete the member');
-                }else{
-                    data.forEach((element,index)=> element.id === deleteTarget ? data.splice(index,1) : null);
-                    return response.data;
-                }
-            })
-            .then(data=>{
-                console.log(data.isGood);
-                setDeleteTarget(null);
-                setDeleteChecker(false);
-            })
-            .catch(err=>{
-                console.log(err)
-            })
+            data.forEach((element,index)=> element.id === deleteTarget ? data.splice(index,1) : null);
+            setDeleteChecker(false);
         }
-    },[deleteChecker]);
+    },[deleteChecker])
     return(
         <>
             {/* Waiting for the response */}
@@ -70,6 +57,7 @@ const Index = ({section}) =>{
                                                 ()=>{
                                                     setDeleteTarget(element.id);
                                                     setDeleteChecker(true);
+                                                    useDestroy(section,element.id);
                                                 }}>
                                                     Delete
                                             </button>
