@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('departements', function (Blueprint $table) {
             $table->id();
             $table->string('nameDepartement');
-            $table->text('descriptionDepartement')->nullable();
+            $table->text('descriptionDepartement')->default('')->nullable();
             $table->timestamps();
         });
     }

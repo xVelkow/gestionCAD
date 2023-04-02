@@ -1,56 +1,35 @@
-<!-- @extends('layouts.app')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
 
-@section('content')
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">{{ __('Edit Department') }}</div>
+    <form action="{{ route('departements.update', ['departement' => $department->id]) }}" method="POST">
+    @csrf
+    @method('PUT')
 
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('departments.update', ['department' => $department->id]) }}">
-                            @csrf
-                            @method('PUT')
-
-                            <div class="form-group row">
-                                <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
-
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name', $department->name) }}" required autocomplete="name" autofocus>
-
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label for="description" class="col-md-4 col-form-label text-md-right">{{ __('Description') }}</label>
-
-                                <div class="col-md-6">
-                                    <textarea id="description" class="form-control @error('description') is-invalid @enderror" name="description" required autocomplete="description">{{ old('description', $department->description) }}</textarea>
-
-                                    @error('description')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="form-group row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('Save Changes') }}
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+    <label for="nameDepartement">name:</label>
+    <input id="nameDepartement" type="text" name="nameDepartement" value="{{ $department->nameDepartement }}">
+    <br>
+    <label for="descriptionDepartement">description:</label>
+    <textarea id="descriptionDepartement" name="descriptionDepartement">{{ $department->descriptionDepartement }}</textarea>
+    <br>                               
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>   
+<a href="{{ route('departements.index') }}">Back to departements index</a> 
+@if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </div>
-@endsection -->
+    @endif      
+</body>
+</html>
+   

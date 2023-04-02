@@ -1,22 +1,24 @@
-<!-- @extends('layouts.app')
 
-@section('content')
-    <div class="container">
-        <div class="card">
-            <div class="card-header">
-                {{ $departement->nameDepartement }}
-            </div>
-            <div class="card-body">
-                <p class="card-text">{{ $departement->descriptionDepartement }}</p>
-            </div>
-            <div class="card-footer">
-                <a href="{{ route('departements.edit', ['departement' => $departement->id]) }}" class="btn btn-primary">Edit</a>
-                <form action="{{ route('departements.destroy', ['departement' => $departement->id]) }}" method="POST" class="d-inline">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </div>
-        </div>
-    </div>
-@endsection -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <p>departement id :{{ $departement->id }} </p>
+    <p> departement name:{{ $departement->nameDepartement }}</p>
+    <p >departement discription:{{ $departement->descriptionDepartement }}</p>
+    <a href="{{ route('departements.edit', ['departement' => $departement->id]) }}" >Edit</a>
+    <form action="{{ route('departements.destroy', ['departement' => $departement->id]) }}" method="POST" >
+    @csrf
+    @method('DELETE')
+    <button type="submit" >Delete</button>
+    </form>
+    <a href="{{ route('departements.index') }}">Back to departements index</a>
+           
+</body>
+</html>

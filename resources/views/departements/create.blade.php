@@ -1,31 +1,30 @@
-<!-- @extends('layouts.app')
-
-@section('content')
-<div class="container">
-    <h1>Create Department</h1>
-    <div class="row">
-        <div class="col-md-6">
-            <form action="{{ route('departments.store') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="name">Name:</label>
-                    <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required>
-                    @error('name')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="description">Description:</label>
-                    <textarea name="description" class="form-control @error('description') is-invalid @enderror" required>{{ old('description') }}</textarea>
-                    @error('description')
-                    <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </div>
-            </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>Create Department</h1>
+<form action="{{ route('departements.store') }}" method="POST">
+    @csrf
+    <label for="nameDepartement">Name:</label>
+    <input type="text" name="nameDepartement" >
+    <br>
+    <label for="descriptionDepartement">Description:</label>
+    <textarea name="descriptionDepartement" ></textarea>
+    <button type="submit" >Create</button>
+</form>
+@if ($errors->any())
+        <div>
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
         </div>
-    </div>
-</div>
-@endsection -->
+    @endif              
+</body>
+</html>

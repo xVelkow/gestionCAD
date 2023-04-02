@@ -6,6 +6,10 @@ namespace App\Http\Controllers;
 use App\Models\departement;
 use Illuminate\Http\Request;
 
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
 class DepartementController extends Controller
 {
     /**
@@ -22,7 +26,7 @@ class DepartementController extends Controller
      */
     public function create()
     {
-        // return view('departements.create');
+         return view('departements.create');
     }
 
     /**
@@ -30,25 +34,33 @@ class DepartementController extends Controller
      */
     public function store(Request $request)
     {
-        // $validated = $request->validate([
-        //     'nameDepartement' => 'required|unique:departements|max:255',
-        //     'descriptionDepartement' => 'required|max:255', ]);
-            
-        //     $departement = new Departement();
-        //     $departement->nameDepartement = $request->nameDepartement;
-        //     $departement->descriptionDepartement = $request->descriptionDepartement;
-        //     $departement->save();
+       
+        $validated = $request->validate([
+            'nameDepartement' => 'required|max:255',
+            'descriptionDepartement' => 'required',
+        ]);
     
-        //     return redirect()->route('departements.index')->with('success', 'Departement created successfully.');
+        $departement = Departement::create([
+            'nameDepartement' => $validated['nameDepartement'],
+            'descriptionDepartement' => $validated['descriptionDepartement']
+        ]);
+    
+    
+    
+        if ($departement) {
+            return redirect()->route('departements.index');
+        } 
     }
+    
+    
 
     /**
      * Display the specified resource.
      */
     public function show($id)
     {
-        // $departement = Departement::findOrFail($id);
-        // return view('departements.show', compact('departement'));
+        $departement = Departement::find($id);
+        return view('departements.show', compact('departement'));
     }
 
     /**
@@ -56,8 +68,8 @@ class DepartementController extends Controller
      */
     public function edit($id)
     {
-        // $departement = Departement::findOrFail($id);
-        // return view('departements.edit', compact('departement'));
+        $department = Departement::find($id);
+        return view('departements\edit', compact('department'));
     }
 
     /**
@@ -65,27 +77,31 @@ class DepartementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // $validated = $request->validate([
-        //     'nameDepartement' => 'required|max:255|unique:departements,nameDepartement,'.$id,
-        //     'descriptionDepartement' => 'required|max:255',
-        // ]);
-
-        // $departement = Departement::findOrFail($id);
-        // $departement->nameDepartement = $request->nameDepartement;
-        // $departement->descriptionDepartement = $request->descriptionDepartement;
-        // $departement->save();
-
-        // return redirect()->route('departements.index')->with('success', 'Departement updated successfully.');
+        $validated = $request->validate([
+            'nameDepartement' => 'required|max:255',
+            'descriptionDepartement' => 'required',
+        ]);
+      
+        $department = Departement::find($id);
+        
+        $department->nameDepartement = $validated['nameDepartement'];
+        $department->descriptionDepartement = $validated['descriptionDepartement'];
+    
+    
+        $department->save();
+    
+        return redirect()->route('departements.index');
     }
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(departement $id)
+    public function destroy($id)
     {
-        // $departement = Departement::findOrFail($id);
-        // $departement->delete();
-
-        // return redirect()->route('departements.index')->with('success', 'Departement deleted successfully.');
+        $departement = Departement::find($id);
+        if ($departement) {
+            $departement->delete();
+            return redirect()->route('departements.index') ;
+        }
+        return redirect()->route('departements.index');
     }
 }
