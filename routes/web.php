@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartementController;
 // use App\Http\Controllers\SessionController;
 
 /*
@@ -19,9 +20,12 @@ use Illuminate\Support\Facades\Route;
 // })->where('path','.*');
 // Route::resource('Members',MemberController::class);
 // Route::resource('sessions', SessionController::class);
-Route::resource('Departements', DepartementController::class);
+Route::resource('departements', DepartementController::class);
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/', function () {
+    return view('entree');
 });
 
 
