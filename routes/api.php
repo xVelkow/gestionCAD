@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PlanningController;
-
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +24,6 @@ use App\Http\Controllers\PlanningController;
 Route::resources([
     'Members' => MemberController::class,
     'Sessions' => SessionController::class,
-    'Plannings' => PlanningController::class
+    'Plannings' => PlanningController::class,
+    'Posts' => PostController::class
 ]);

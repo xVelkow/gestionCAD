@@ -20,6 +20,10 @@ const useFormData = (method,section,object) =>{
                 formData.append('titlePlanning',object.Title);
                 formData.append('descriptionPlanning',object.Description);
                 break;
+            case 'Posts':
+                formData.append('titlePost',object.Title);
+                formData.append('descriptionPost',object.Description);
+                break;
         }
         return formData;
     // }

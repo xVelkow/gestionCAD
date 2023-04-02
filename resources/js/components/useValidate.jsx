@@ -65,6 +65,7 @@ const useValidate = async (section,object) =>{
                     }
                     break;
                 case 'Plannings':
+                case 'Posts':
                     checked = true;
                     break;
             }
