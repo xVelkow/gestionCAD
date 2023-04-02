@@ -15,17 +15,17 @@ use App\Http\Controllers\DepartementController;
 |
 */
 
-// Route::get('/{path?}', function () {
-//     return view('welcome');
-// })->where('path','.*');
+Route::get('/{path?}', function () {
+    return view('welcome');
+})->where('path','.*');
 // Route::resource('Members',MemberController::class);
 // Route::resource('sessions', SessionController::class);
-Route::resource('departements', DepartementController::class);
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/', function () {
-    return view('entree');
-});
+// Route::resource('departements', DepartementController::class);
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/', function () {
+//     return view('entree');
+// });
 
 
