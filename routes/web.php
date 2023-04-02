@@ -14,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{path?}', function () {
-    return view('welcome');
-})->where('path','.*');
+// Route::get('/{path?}', function () {
+//     return view('welcome');
+// })->where('path','.*');
 // Route::resource('Members',MemberController::class);
 // Route::resource('sessions', SessionController::class);
+Route::resource('Departements', DepartementController::class);
+Route::get('/', function () {
+    return view('welcome');
+});
+
+

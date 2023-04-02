@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Laravel</title>
-        @viteReactRefresh
-        @vite('resources/js/app.jsx')
-    </head>
-    <body>
-        <div id="app"></div>
-    </body>
-</html>
+@extends('layouts.app')
+
+@section('content')
+   <div class="flex-center position-ref full-height">
+        <div class="content">
+            <div class="title m-b-md">
+                Gestion CAD
+            </div>
+            <div class="links">
+                <a href="{{ route('index') }}">Go to the Index</a>
+            </div>
+        </div>
+    </div>
+@endsection
