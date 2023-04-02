@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useFormData from "../../components/useFormData";
+import useValidate from "../../components/useValidate";
 const Create = ({section}) =>{
 	const navigate = useNavigate();
 	const obj = [
@@ -12,35 +14,14 @@ const Create = ({section}) =>{
 				'START',['Email','Department','Role']
 			]
 		],
-		['Sessions','Reference']
+		['Sessions','Reference'],
+		['Plannings','Title','Description']
 	];
 	
 	const [checked,setChecked] = useState(false);
 	const needSlice = ['Members']; // whatever section needs to slice form
 	const [object,setObject] = useState({})
-	const [isReady,setIsReady] = useState(false);
   	const [showCase,setShowCase] = useState({state:''});
-
-	// formData
-    const send = () =>{
-		if(isReady){
-			const formData = new FormData();
-			switch(section){
-				case 'Members':
-					formData.append('id',object.Cef);
-					formData.append('fullNameMember',object.Name);
-					formData.append('groupMember',object.Group);
-					formData.append('emailMember',object.Email);
-					formData.append('departmentMember',object.Department);
-					formData.append('roleMember',object.Role);
-					break;
-				case 'Sessions':
-					formData.append('refSession',object.Reference);
-					break;
-				}
-				return formData;
-		}
-	}
 
 	// fill object
 	useEffect(()=>{
@@ -70,61 +51,76 @@ const Create = ({section}) =>{
 	},[]);	
 
 	// validation
-	const check = async () =>{
-		const allEmpty = await Object.values(object).every(v=>v == '');
-		if(allEmpty){
-			setShowCase({
-				state: 'alert-fail',
-				message: 'Please fill the fields first'
-			});
-		}else{
-			const isEmpty = await Object.values(object).some(v=>v == '');
-			if(isEmpty){
-				setShowCase({
-					state: 'alert-fail',
-					message: 'Input fields should not be empt'
-				});
-			}else{
-				switch(section){
-					case 'Members':
-						if(object.Cef.match(/^[0-9]{13}$/)){
-							const domain = /@ofppt-edu.ma$/;
-							const domainTest = domain.test(object.Email.toLowerCase());
-							if(domainTest){
-								if(object.Email.match(/\@/g).length === 1){
-									setChecked(true);
-									setIsReady(true);
-								}else{
-									setShowCase({state:'alert-fail',message:'Email should contain only one @'});
-								}
-							}else{
-								setShowCase({state:'alert-fail',message:'Email should end with @ofppt-edu.ma'});
-							}
-						}else{
-							setShowCase({state:'alert-fail',message:'Cef should contain exactly 13 digits'});
-						}
-						break;
-					case 'Sessions':
-						const pattern = /^\d{4}-\d{4}$/;
-						if(pattern.test(object.Reference)){
-							const [sec1, sec2] = object.Reference.split('-');
-							if((+sec1) + 1 === (+sec2)){
-								setChecked(true);
-								setIsReady(true);
-							}else{
-							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
-							}
-						}
-						else{
-							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
-						}
-						break;
-				}
-			}
-		}
-		setTimeout(()=>{
-			setShowCase(showCase=>({...showCase,state:''}));
-		},2000);
+	// const check = async () =>{
+	// 	const allEmpty = await Object.values(object).every(v=>v == '');
+	// 	if(allEmpty){
+	// 		setShowCase({
+	// 			state: 'alert-fail',
+	// 			message: 'Please fill the fields first'
+	// 		});
+	// 	}else{
+	// 		const isEmpty = await Object.values(object).some(v=>v == '');
+	// 		if(isEmpty){
+	// 			setShowCase({
+	// 				state: 'alert-fail',
+	// 				message: 'Input fields should not be empty'
+	// 			});
+	// 		}else{
+	// 			switch(section){
+	// 				case 'Members':
+	// 					if(object.Cef.match(/^[0-9]{13}$/)){
+	// 						const domain = /@ofppt-edu.ma$/;
+	// 						const domainTest = domain.test(object.Email.toLowerCase());
+	// 						if(domainTest){
+	// 							if(object.Email.match(/\@/g).length === 1){
+	// 								setChecked(true);
+	// 								setIsReady(true);
+	// 							}else{
+	// 								setShowCase({state:'alert-fail',message:'Email should contain only one @'});
+	// 							}
+	// 						}else{
+	// 							setShowCase({state:'alert-fail',message:'Email should end with @ofppt-edu.ma'});
+	// 						}
+	// 					}else{
+	// 						setShowCase({state:'alert-fail',message:'Cef should contain exactly 13 digits'});
+	// 					}
+	// 					break;
+	// 				case 'Sessions':
+	// 					const pattern = /^\d{4}-\d{4}$/;
+	// 					if(pattern.test(object.Reference)){
+	// 						const [sec1, sec2] = object.Reference.split('-');
+	// 						if((+sec1) + 1 === (+sec2)){
+	// 							setChecked(true);
+	// 							setIsReady(true);
+	// 						}else{
+	// 						setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
+	// 						}
+	// 					}
+	// 					else{
+	// 						setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
+	// 					}
+	// 					break;
+	// 				case 'Plannings':
+	// 					setChecked(true);
+	// 					setIsReady(true);
+	// 					break;
+	// 			}
+	// 		}
+	// 	}
+	// 	setTimeout(()=>{
+	// 		setShowCase(showCase=>({...showCase,state:''}));
+	// 	},2000);
+	// }
+	const check = ()=>{
+		const showObj = useValidate(section,object);
+		showObj.then(res=>{
+			const [showObj, checked] = res;
+			setChecked(checked);
+			setShowCase({...showObj})
+			setTimeout(()=>{
+				setShowCase(showCase=>({...showCase, state:''}));
+			},2000);
+		})
 	}
 
 	// handle inputs
@@ -137,7 +133,7 @@ const Create = ({section}) =>{
 
 	// send data
 	useEffect(()=>{
-		const formData = send();
+		const formData = useFormData('POST',section,object);
 		if(checked){
 			axios.post(`http://127.0.0.1:8000/api/${section}`,formData)
 			.then(res=>{
@@ -149,13 +145,11 @@ const Create = ({section}) =>{
 			})
 			.then(data=>{
 				console.log(data);
-				setIsReady(false);
 				setChecked(false);
 			})
 			.catch(err=>{
 				console.clear();
 				console.log(err.response);
-				setIsReady(false);
 				setChecked(false);
 			});
 		}

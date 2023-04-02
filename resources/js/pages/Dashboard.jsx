@@ -8,7 +8,7 @@ const Dashboard = () =>{
             <ul>
                 <li><Link to='/Dashboard/Members'>go to Members</Link></li>
                 <li><Link to='/Dashboard/Sessions'>go to Sessions</Link></li>
-
+                <li><Link to='/Dashboard/Plannings'>go to Plannings</Link></li>
             </ul>
         </>
     );

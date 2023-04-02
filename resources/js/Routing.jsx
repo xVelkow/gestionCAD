@@ -20,6 +20,11 @@ const Routing = () =>{
                 <Route path='/Dashboard/Sessions/Create' element={<Create section='Sessions' />} />
                 <Route path='/Dashboard/Sessions/:id/Edit' element={<Edit section='Sessions' />} />
 
+                <Route path='/Dashboard/Plannings' element={<Index section='Plannings' />} />
+                <Route path='/Dashboard/Plannings/:id' element={<Show section='Plannings' />} />
+                <Route path='/Dashboard/Plannings/Create' element={<Create section='Plannings' />} />
+                <Route path='/Dashboard/Plannings/:id/Edit' element={<Edit section='Plannings' />} />
+
                 <Route path='*' element={<NotFound />} />
             </Routes>
         </>
