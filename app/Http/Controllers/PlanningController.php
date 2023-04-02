@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Planning;
-use Illuminate\Http\Request;
-
+use App\Http\Requests\PlanningRequest;
 class PlanningController extends Controller
 {
     public function index(){
@@ -13,7 +12,7 @@ class PlanningController extends Controller
         return response()->json($planning);
     }
 
-    public function store(Request $request){
+    public function store(PlanningRequest $request){
         try{
             $planning = new Planning();
             $planning->titlePlanning = $request->titlePlanning;
@@ -33,7 +32,7 @@ class PlanningController extends Controller
         return response()->json($planning);
     }
 
-    public function update(Request $request, Planning $planning,$id)
+    public function update(PlanningRequest $request, Planning $planning,$id)
     {
         try{
             $planning = Planning::find($id);
