@@ -5,21 +5,23 @@ import Index from "./pages/Members/Index";
 import Show from "./pages/Members/Show";
 import Edit from "./pages/Members/Edit";
 import NotFound from "./pages/NotFound";
+import React from "react";
 const Routing = () =>{
+    const models = ['Members','Sessions','Plannings','Posts'];
     return(
         <>
             <Routes>
                 <Route path='/Dashboard' element={<Dashboard />} />
-                <Route path='/Dashboard/Members' element={<Index section='Members' />} />
-                <Route path='/Dashboard/Members/:id' element={<Show section='Members' />} />
-                <Route path='/Dashboard/Members/Create' element={<Create section='Members' />} />
-                <Route path='/Dashboard/Members/:id/Edit' element={<Edit section='Members' />} />
-
-                <Route path='/Dashboard/Sessions' element={<Index section='Sessions' />} />
-                <Route path='/Dashboard/Sessions/:id' element={<Show section='Sessions' />} />
-                <Route path='/Dashboard/Sessions/Create' element={<Create section='Sessions' />} />
-                <Route path='/Dashboard/Sessions/:id/Edit' element={<Edit section='Sessions' />} />
-
+                {
+                    models.map(route=>{return(
+                        <React.Fragment key={`${route}`}>
+                            <Route key={`${route}-index`} path={`/Dashboard/${route}`} element={<Index section={route} />} />
+                            <Route key={`${route}-show`} path={`/Dashboard/${route}/:id`} element={<Show section={route} />} />
+                            <Route key={`${route}-create`} path={`/Dashboard/${route}/Create`} element={<Create section={route} />} />
+                            <Route key={`${route}-edit`} path={`Dashboard/${route}/:id/Edit`} element={<Edit section={route} />} />
+                        </React.Fragment>
+                    )})
+                }
                 <Route path='*' element={<NotFound />} />
             </Routes>
         </>

@@ -103,7 +103,7 @@ body{
     content: '';
     position: absolute;
     background-color: #5fa8d3;
-    height:1.5px;
+    height: 0.09em;
     width: 15em;
     bottom: -1px;
     left: 0%;
@@ -123,10 +123,11 @@ body{
     color: #5fa8d3;
     transform: translateX(0%);
 }
-.input-wrapper:nth-child(2n) .input-field:focus + .input-content::after,
+/* .input-wrapper:nth-child(2n) .input-field:focus + .input-content::after,
 .input-wrapper:nth-child(2n) .input-field:valid + .input-content::after{
     height: 1px;
-} /*this one for the thick underline error*/
+} */
+/* this one for the thick underline error */
 
 .input-field:focus + .input-content>.input-name,
 .input-field:valid + .input-content>.input-name{

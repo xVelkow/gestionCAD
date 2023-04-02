@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import useFetch from '../../components/useFetch';
+import useFormData from "../../components/useFormData";
+import useValidate from "../../components/useValidate";
 const Edit = ({section}) =>{
     const navigate = useNavigate();
     const {id} = useParams();
@@ -14,12 +16,13 @@ const Edit = ({section}) =>{
 				'START',['Email','Department','Role']
 			]
 		],
-		['Sessions','Reference']
+		['Sessions','Reference'],
+		['Plannings','Title','Description'],
+		['Posts','Title','Description']
 	];
 	const [checked,setChecked] = useState(false);
 	const needSlice = ['Members']; // whatever section needs to slice form
 	const [object,setObject] = useState({})
-	const [isReady,setIsReady] = useState(false);
   	const [showCase,setShowCase] = useState({state:''});
 	const {data = {},isPending,error} = useFetch(`${section}/${id}`);
 	// handle inputs
@@ -40,6 +43,18 @@ const Edit = ({section}) =>{
 					Reference: data.refSession
 				});
 				break;
+			case 'Plannings':
+				setObject({
+					Title: data.titlePlanning,
+					Description: data.descriptionPlanning
+				});
+				break;
+			case 'Posts':
+				setObject({
+					Title: data.titlePost,
+					Description: data.descriptionPost
+				});
+				break;
 		}
 	}
 	// display data
@@ -54,86 +69,20 @@ const Edit = ({section}) =>{
 		}))
 	}
 	// validation
-	const check = async () =>{
-		const allEmpty = await Object.values(object).every(v=>v == '');
-		if(allEmpty){
-			setShowCase({
-				state: 'alert-fail',
-				message: 'Please fill the fields first'
-			});
-		}else{
-			const isEmpty = await Object.values(object).some(v=>v == '');
-			if(isEmpty){
-				setShowCase({
-					state: 'alert-fail',
-					message: 'Input fields should not be empt'
-				});
-			}else{
-				switch(section){
-					case 'Members':
-						if(object.Cef.match(/^[0-9]{13}$/)){
-							const domain = /@ofppt-edu.ma$/;
-							const domainTest = domain.test(object.Email.toLowerCase());
-							if(domainTest){
-								if(object.Email.match(/\@/g).length === 1){
-									setChecked(true);
-									setIsReady(true);
-								}else{
-									setShowCase({state:'alert-fail',message:'Email should contain only one @'});
-								}
-							}else{
-								setShowCase({state:'alert-fail',message:'Email should end with @ofppt-edu.ma'});
-							}
-						}else{
-							setShowCase({state:'alert-fail',message:'Cef should contain exactly 13 digits'});
-						}
-						break;
-					case 'Sessions':
-						const pattern = /^\d{4}-\d{4}$/;
-						if(pattern.test(object.Reference)){
-							const [sec1, sec2] = object.Reference.split('-');
-							if((+sec1) + 1 === (+sec2)){
-								setChecked(true);
-								setIsReady(true);
-							}else{
-							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
-							}
-						}
-						else{
-							setShowCase({state:'alert-fail',message:'Example: 2022-2023'});
-						}
-						break;
-				}
-			}
-		}
-		setTimeout(()=>{
-			setShowCase(showCase=>({...showCase,state:''}));
-		},2000);
+	const check = ()=>{
+		const showObj = useValidate(section,object);
+		showObj.then(res=>{
+			const [showObj, checked] = res;
+			setChecked(checked);
+			setShowCase({...showObj})
+			setTimeout(()=>{
+				setShowCase(showCase=>({...showCase, state:''}));
+			},2000);
+		})
 	}
-	// formData
-	const send = () =>{
-		if(isReady){
-			const formData = new FormData();
-			formData.append('_method', 'PATCH');
-			switch(section){
-				case 'Members':
-					formData.append('id',object.Cef);
-					formData.append('fullNameMember',object.Name);
-					formData.append('groupMember',object.Group);
-					formData.append('emailMember',object.Email);
-					formData.append('departmentMember',object.Department);
-					formData.append('roleMember',object.Role);
-					break;
-				case 'Sessions':
-					formData.append('refSession',object.Reference);
-					break;
-				}
-				return formData;
-		}
-	}
-
+// update data
 	useEffect(()=>{
-		const formData = send();
+		const formData = useFormData('PATCH',section,object);
 		if(checked){
 			axios.post(`http://127.0.0.1:8000/api/${section}/${id}`,formData)
 			.then(res=>{
@@ -145,8 +94,8 @@ const Edit = ({section}) =>{
 							navigate(`/Dashboard/${section}/${object.Cef}`);
 							break;
 						case 'Departments':
-						case 'Events':
-						case 'Planning':
+						case 'Posts':
+						case 'Plannings':
 						case 'Sessions':
 							navigate(`/Dashboard/${section}/${data.id}`);
 							break;
@@ -156,7 +105,6 @@ const Edit = ({section}) =>{
 			.catch(err=>{
 				console.clear();
 				console.log(err.response);
-				setIsReady(false);
 				setChecked(false);
 			});
 		}
