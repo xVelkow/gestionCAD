@@ -16,7 +16,8 @@ const Create = ({section}) =>{
 		],
 		['Sessions','Reference'],
 		['Plannings','Title','Description'],
-		['Posts','Title','Description']
+		['Posts','Title','Description'],
+		['Departments','Name','Description']
 	];
 	
 	const [checked,setChecked] = useState(false);

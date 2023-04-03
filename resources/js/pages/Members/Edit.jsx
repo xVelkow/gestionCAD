@@ -18,7 +18,8 @@ const Edit = ({section}) =>{
 		],
 		['Sessions','Reference'],
 		['Plannings','Title','Description'],
-		['Posts','Title','Description']
+		['Posts','Title','Description'],
+		['Departments','Name','Description']
 	];
 	const [checked,setChecked] = useState(false);
 	const needSlice = ['Members']; // whatever section needs to slice form
@@ -53,6 +54,12 @@ const Edit = ({section}) =>{
 				setObject({
 					Title: data.titlePost,
 					Description: data.descriptionPost
+				});
+				break;
+			case 'Departments':
+				setObject({
+					Name: data.nameDepartment,
+					Description: data.descriptionDepartment
 				});
 				break;
 		}

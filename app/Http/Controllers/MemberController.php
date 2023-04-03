@@ -18,7 +18,6 @@ class MemberController extends Controller
     }
 
     public function store(MemberRequest $request){
-        try{
             $s = 'salam';
             $member = new Member();
             $member->id = $request->id;
@@ -28,20 +27,15 @@ class MemberController extends Controller
             $member->emailMember = $request->emailMember;
             $member->departmentMember = $request->departmentMember;
             $member->roleMember = $request->roleMember;
-            if($member->save()){
-                return response()->json(['isGood'=>true]);
-            }
-        }catch(Exception $error){
-            return response()->json(['isGood'=>false]);
-        }
+            $member->save();
+            return response()->json(['isGood'=>true]);
     }
 
     public function show(Member $member, $id){
-            $member = Member::find($id)->toArray();
+            $member = Member::find($id);
             return response()->json($member);
     }
     public function update(MemberRequest $request, Member $member,$id){
-        try{
             $member = Member::find($id);
             $member->id = $request->id;
             $member->fullNameMember = $request->fullNameMember;
@@ -49,21 +43,12 @@ class MemberController extends Controller
             $member->emailMember = $request->emailMember;
             $member->departmentMember = $request->departmentMember;
             $member->roleMember = $request->roleMember;
-            if($member->save()){
-                return response()->json(['isGood'=>true]);
-            }
-        }catch(Exception $error){
-            return response()->json(['isGood'=>false]);
-        }
+            $member->save();
+            return response()->json(['isGood'=>true]);
     }
 
     public function destroy(Member $member,$id){
-        try{
-            if(Member::destroy($id)){
-                return response()->json(['isGood'=>true]);
-            }
-        }catch(Exception $error){
-            return response()->json(['isGood'=>false]);
-        }
+        Member::destroy($id);
+        return response()->json(['isGood'=>true]);
     }
 }

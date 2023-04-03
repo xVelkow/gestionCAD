@@ -24,6 +24,10 @@ const useFormData = (method,section,object) =>{
                 formData.append('titlePost',object.Title);
                 formData.append('descriptionPost',object.Description);
                 break;
+            case 'Departments':
+                formData.append('nameDepartment',object.Name);
+                formData.append('descriptionDepartment',object.Description);
+                break;
         }
         return formData;
     // }

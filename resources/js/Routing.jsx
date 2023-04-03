@@ -7,7 +7,7 @@ import Edit from "./pages/Members/Edit";
 import NotFound from "./pages/NotFound";
 import React from "react";
 const Routing = () =>{
-    const models = ['Members','Sessions','Plannings','Posts'];
+    const models = ['Members','Sessions','Plannings','Posts','Departments'];
     return(
         <>
             <Routes>

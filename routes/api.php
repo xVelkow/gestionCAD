@@ -6,6 +6,7 @@ use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\DepartmentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,5 +26,6 @@ Route::resources([
     'Members' => MemberController::class,
     'Sessions' => SessionController::class,
     'Plannings' => PlanningController::class,
-    'Posts' => PostController::class
+    'Posts' => PostController::class,
+    'Departments' => DepartmentController::class
 ]);
