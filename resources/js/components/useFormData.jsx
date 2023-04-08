@@ -9,7 +9,7 @@ const useFormData = (method,section,object) =>{
                 formData.append('id',object.Cef);
                 formData.append('fullNameMember',object.Name);
                 formData.append('groupMember',object.Group);
-                formData.append('emailMember',object.Email);
+                formData.append('email',object.Email);
                 formData.append('departmentMember',object.Department);
                 formData.append('roleMember',object.Role);
                 break;

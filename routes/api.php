@@ -7,6 +7,8 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AuthController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +24,9 @@ use App\Http\Controllers\DepartmentController;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+// Route::post('/Login',function(){echo "log";});
+Route::post('/Login',[AuthController::class,'Login'])->name('login');
+Route::get('/Logout',[AuthController::class,'Logout'])->name('logout');
 Route::resources([
     'Members' => MemberController::class,
     'Sessions' => SessionController::class,

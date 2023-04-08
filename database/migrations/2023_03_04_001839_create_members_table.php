@@ -15,8 +15,8 @@ return new class extends Migration
             $table->string('id')->primary()->unique()->nullable(false);
             $table->string('fullNameMember')->nullable(false);
             $table->string('groupMember')->nullable(false);
-            $table->string('emailMember')->unique()->nullable(false);
-            $table->string('passwordMember')->nullable(false);
+            $table->string('email')->unique()->nullable(false);
+            $table->string('password')->nullable(false);
             $table->string('departmentMember')->nullable(false);
             $table->string('roleMember')->nullable(false);
         });

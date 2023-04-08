@@ -23,8 +23,8 @@ class MemberController extends Controller
             $member->id = $request->id;
             $member->fullNameMember = $request->fullNameMember;
             $member->groupMember = $request->groupMember;
-            $member->passwordMember = Hash::make($s);
-            $member->emailMember = $request->emailMember;
+            $member->password = Hash::make($s);
+            $member->email = $request->email;
             $member->departmentMember = $request->departmentMember;
             $member->roleMember = $request->roleMember;
             $member->save();
@@ -40,7 +40,7 @@ class MemberController extends Controller
             $member->id = $request->id;
             $member->fullNameMember = $request->fullNameMember;
             $member->groupMember = $request->groupMember;
-            $member->emailMember = $request->emailMember;
+            $member->email = $request->email;
             $member->departmentMember = $request->departmentMember;
             $member->roleMember = $request->roleMember;
             $member->save();

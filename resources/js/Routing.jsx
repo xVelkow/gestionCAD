@@ -5,12 +5,14 @@ import Index from "./pages/Members/Index";
 import Show from "./pages/Members/Show";
 import Edit from "./pages/Members/Edit";
 import NotFound from "./pages/NotFound";
+import Login from "./pages/Login";
 import React from "react";
 const Routing = () =>{
     const models = ['Members','Sessions','Plannings','Posts','Departments'];
     return(
         <>
             <Routes>
+                <Route path='/Login' element={<Login />} />
                 <Route path='/Dashboard' element={<Dashboard />} />
                 {
                     models.map(route=>{return(
