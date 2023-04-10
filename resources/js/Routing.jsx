@@ -8,7 +8,7 @@ import NotFound from "./pages/NotFound";
 import Login from "./pages/Login";
 import React from "react";
 const Routing = () =>{
-    const models = ['Members','Sessions','Plannings','Posts','Departments'];
+    const models = ['Members','Sessions','Plannings','Posts','Departments','Meetings'];
     return(
         <>
             <Routes>

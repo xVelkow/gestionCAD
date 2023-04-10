@@ -8,6 +8,7 @@ use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MeetingController;
 
 
 /*
@@ -32,5 +33,6 @@ Route::resources([
     'Sessions' => SessionController::class,
     'Plannings' => PlanningController::class,
     'Posts' => PostController::class,
-    'Departments' => DepartmentController::class
+    'Departments' => DepartmentController::class,
+    'Meetings' => MeetingController::class
 ]);

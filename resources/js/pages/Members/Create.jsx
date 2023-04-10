@@ -17,11 +17,17 @@ const Create = ({section}) =>{
 		['Sessions','Reference'],
 		['Plannings','Title','Description'],
 		['Posts','Title','Description'],
-		['Departments','Name','Description']
+		['Departments','Name','Description'],
+		['Meetings',
+			[
+				'START',['Title','Room'],
+				'START',['Date','Time']
+			]
+		]
 	];
 	
 	const [checked,setChecked] = useState(false);
-	const needSlice = ['Members']; // whatever section needs to slice form
+	const needSlice = ['Members','Meetings']; // whatever section needs to slice form
 	const [object,setObject] = useState({})
   	const [showCase,setShowCase] = useState({state:''});
 

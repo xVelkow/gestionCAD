@@ -26,7 +26,7 @@ class MeetingRequest extends FormRequest
             $request->validate(
                 [
                     'titleMeeting' => 'required|max:255',
-                    'dateMeeting' => 'required|date_format:d-m-y',
+                    'dateMeeting' => 'required',
                     'roomMeeting' => 'required|max:255'
                 ])
                 

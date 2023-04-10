@@ -28,6 +28,12 @@ const useFormData = (method,section,object) =>{
                 formData.append('nameDepartment',object.Name);
                 formData.append('descriptionDepartment',object.Description);
                 break;
+            case 'Meetings' :
+                formData.append('titleMeeting',object.Title);
+                formData.append('roomMeeting',object.Room);
+                formData.append('dateMeeting',object.Date);
+                formData.append('timeMeeting',object.Time);
+                break;
         }
         return formData;
     // }

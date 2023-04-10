@@ -19,7 +19,13 @@ const Edit = ({section}) =>{
 		['Sessions','Reference'],
 		['Plannings','Title','Description'],
 		['Posts','Title','Description'],
-		['Departments','Name','Description']
+		['Departments','Name','Description'],
+		['Meetings',
+			[
+				'START',['Title','Room'],
+				'START',['Date','Time']
+			]
+		]
 	];
 	const [checked,setChecked] = useState(false);
 	const needSlice = ['Members']; // whatever section needs to slice form
@@ -60,6 +66,14 @@ const Edit = ({section}) =>{
 				setObject({
 					Name: data.nameDepartment,
 					Description: data.descriptionDepartment
+				});
+				break;
+			case 'Meetings' :
+				setObject({
+					Title: data.titleMeeting,
+					Room: data.roomMeeting,
+					Date: data.dateMeeting,
+					Time: data.timeMeeting
 				});
 				break;
 		}
@@ -104,6 +118,7 @@ const Edit = ({section}) =>{
 						case 'Posts':
 						case 'Plannings':
 						case 'Sessions':
+						case 'Meetings' :
 							navigate(`/Dashboard/${section}/${data.id}`);
 							break;
 					}
