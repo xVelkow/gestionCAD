@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
 
 class MeetingRequest extends FormRequest
 {
@@ -19,13 +20,16 @@ class MeetingRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
-    public function rules(): array
+    public function rules(Request $request): array
     {
         return [
-            
-                'TitleMeeting' => 'required|max:255',
-                'DateMeeting' => 'required|date_format:d-m-y',
-                'RoomMeeting' => 'required|max:255',
+            $request->validate(
+                [
+                    'titleMeeting' => 'required|max:255',
+                    'dateMeeting' => 'required|date_format:d-m-y',
+                    'roomMeeting' => 'required|max:255'
+                ])
+                
         ];
     }
 }

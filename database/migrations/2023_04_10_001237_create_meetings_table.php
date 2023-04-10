@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('meetings', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('TitleMeeting');
-            $table->date('DateMeeting');
-            $table->string('RoomMeeting');
+            $table->string('titleMeeting');
+            $table->date('dateMeeting');
+            $table->string('roomMeeting');
         });
     }
 
