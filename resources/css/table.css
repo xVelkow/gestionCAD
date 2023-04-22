@@ -5,14 +5,13 @@
 }
 .data-wrapper{
     /* border-collapse: collapse; */
-    margin: 25px 0;
     font-size: 0.9rem;
     min-width: 400px;
     /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.15); */
 }
 .data-wrapper .data-header .data-row,
 .data-wrapper tfoot .data-row {
-    background-color: #22A2FF;
+    background-color: #008CBA;
     color: #ffffff;
 }
 .data-wrapper .data-header .data-row,
@@ -28,11 +27,11 @@
 }
 
 .data-wrapper .data-body .data-row:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #f2eeee;
 }
 .data-wrapper .data-body .data-row:nth-of-type(odd){
     /* background-color: rgb(174, 173, 173); */
-    background-color: #bdbdbd;
+    background-color: #dcd8d8;
 } 
 .data-wrapper .data-body .data-row:last-of-type {
     border-bottom: 3px solid #009879;

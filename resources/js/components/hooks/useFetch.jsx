@@ -6,7 +6,11 @@ const useFetch = (request) =>{
     const [isPending,setIsPending] = useState(true);
     const [error,setError] = useState(null);
     useEffect(()=>{
-        axios.get(`http://127.0.0.1:8000/api/${request}/`)
+        axios.get(`http://127.0.0.1:8000/api/${request}/`,{
+            headers:{
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
         .then(response=>{
             if(response.statusText !== "OK" || typeof(response.data) !== 'object'){
                 throw Error(`Could not fetch data from ${request}`);
@@ -23,7 +27,7 @@ const useFetch = (request) =>{
             setError(err.message);
             setIsPending(false);
         })
-    },[]);
+    },[request]);
     return {data,isPending,error};
 }
 export default useFetch;

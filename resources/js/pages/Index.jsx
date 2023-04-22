@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useFetch from "../../components/useFetch";
-import useDestroy from "../../components/useDestroy";
-
+import useFetch from "../components/hooks/useFetch";
+import useDestroy from "../components/hooks/useDestroy";
+import NavBar from "../components/snippets/NavBar";
 const Index = ({section}) =>{
     const [deleteTarget,setDeleteTarget] = useState(null);
     const [deleteChecker,setDeleteChecker] = useState(false);
-    const {data = {},isPending,error} = useFetch(section);
+    const {data = {}, isPending, error} = useFetch(section);
     const navigate = useNavigate();
 
     // reloading data
@@ -18,6 +18,8 @@ const Index = ({section}) =>{
     },[deleteChecker])
     return(
         <>
+        <NavBar />
+
             {/* Waiting for the response */}
             { isPending &&
                 <>
@@ -27,13 +29,12 @@ const Index = ({section}) =>{
             {/* Response ready */}
             { (data.length > 0 && !isPending) &&
             <>
-                <ul>
-                    <li><Link to='/Dashboard' >Go to Dashboard</Link></li>
-                    <li><Link to='Create' >Create new {section}</Link></li>
-                </ul>
                 <div className="container">
                     <table className="data-wrapper">
                         <thead className="data-header">
+                            <tr className="data-row">
+                                <th colSpan={6} style={{textAlign: 'center'}}><Link to='Create' style={{textDecoration: 'none', color: 'white'}}>&gt; Create new {section} &lt;</Link></th>
+                            </tr>
                             <tr className="data-row" key='headers' >
                                 {
                                     Object.keys(data[0]).map(key=>{return(

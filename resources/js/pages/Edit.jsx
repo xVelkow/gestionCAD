@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import useFetch from '../../components/useFetch';
-import useFormData from "../../components/useFormData";
-import useValidate from "../../components/useValidate";
+import useFetch from '../components/hooks/useFetch';
+import useFormData from "../components/hooks/useFormData";
+import useValidate from "../components/hooks/useValidate";
+import NavBar from "../components/snippets/NavBar";
+
 const Edit = ({section}) =>{
     const navigate = useNavigate();
     const {id} = useParams();
@@ -34,7 +36,7 @@ const Edit = ({section}) =>{
 					Cef: data.id,
 					Name: data.fullNameMember,
 					Group: data.groupMember,
-					Email: data.emailMember,
+					Email: data.email,
 					Department: data.departmentMember,
 					Role: data.roleMember
 				});
@@ -91,7 +93,11 @@ const Edit = ({section}) =>{
 	useEffect(()=>{
 		const formData = useFormData('PATCH',section,object);
 		if(checked){
-			axios.post(`http://127.0.0.1:8000/api/${section}/${id}`,formData)
+			axios.post(`http://127.0.0.1:8000/api/${section}/${id}`,formData,{
+				headers:{
+					Authorization: `Bearer ${localStorage.getItem('token')}`
+				}
+			})
 			.then(res=>{
 				if(res.statusText !== "OK" || typeof(res.data) !== 'object'){
 					throw Error('Could not send data');
@@ -118,6 +124,7 @@ const Edit = ({section}) =>{
 	},[checked])
 	return(
 		<>
+		<NavBar />
 		<div className={`alert ${showCase.state}`}>
 			{showCase.message}
 		</div>
@@ -125,7 +132,7 @@ const Edit = ({section}) =>{
 			
 			<div className='form-container'>
 				<div className={needSlice.includes(section) ? "form-holder" : "form-holder1"}>
-					<h2 className="form-title">Create new {section}</h2>
+					<h2 className="form-title">Edit {section.slice(0,-1)}</h2>
 					<div className={needSlice.includes(section) ? "form-wrapper" : null}>
 						{
 							obj.map(elements=>{return(
@@ -156,7 +163,7 @@ const Edit = ({section}) =>{
 									</div>
 									: element.map(target=>{return(
 										typeof(target) === 'object' &&
-										<div className="form-slicer">
+										<div key={`${target}-Slicer`} className="form-slicer">
 												{target.map(labelValue=>{return( // for select options put the selected inputs in an object and use includes as a condition after this block
 													<div key={labelValue} className="input-wrapper">
 													
@@ -188,7 +195,7 @@ const Edit = ({section}) =>{
 					</div>
 					<div className={needSlice.includes(section) ? "form-actions" : "form-actions1"}>
 						<button className='action-button cancel-button' onClick={()=>{navigate(`/Dashboard/${section}`)}}>Cancel</button>
-						  <button type='submit' className='action-button send-button' onClick={check}>Create</button>
+						  <button type='submit' className='action-button send-button' onClick={check}>Edit</button>
 					  </div>
 				</div>
 			</div>

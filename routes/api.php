@@ -7,6 +7,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,14 +19,14 @@ use App\Http\Controllers\DepartmentController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-Route::resources([
-    'Members' => MemberController::class,
-    'Sessions' => SessionController::class,
-    'Plannings' => PlanningController::class,
-    'Posts' => PostController::class,
-    'Departments' => DepartmentController::class
-]);
+Route::post('login',[AuthController::class,'login']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('logout',[AuthController::class,'logout']);
+    Route::resources([
+            'Members' => MemberController::class,
+            'Sessions' => SessionController::class,
+            'Plannings' => PlanningController::class,
+            'Posts' => PostController::class,
+            'Departments' => DepartmentController::class
+        ]);
+});

@@ -24,7 +24,7 @@ class MemberRequest extends FormRequest
             $request->validate([
                 'id'=>['bail','string','required','between:13,13','alpha_num'],
                 'fullNameMember'=>['bail','string','required','max:100'],
-                'emailMember'=>['bail','email','ends_with:@ofppt-edu.ma','required','max:100'],
+                'email'=>['bail','email','ends_with:@ofppt-edu.ma','required','max:100'],
                 'groupMember'=>['bail','string','required','max:25'],
                 'departmentMember'=>['bail','string','required','max:100'],
                 'roleMember'=>['bail','string','required','max:30']

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 const useValidate = async (section,object) =>{
     let checked = false;
     let showObj = {};

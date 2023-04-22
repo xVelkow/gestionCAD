@@ -1,5 +1,4 @@
 const useFormData = (method,section,object) =>{
-    // if(isReady){
         const formData = new FormData();
         if(method === 'PATCH'){
             formData.append('_method', 'PATCH');
@@ -9,7 +8,7 @@ const useFormData = (method,section,object) =>{
                 formData.append('id',object.Cef);
                 formData.append('fullNameMember',object.Name);
                 formData.append('groupMember',object.Group);
-                formData.append('emailMember',object.Email);
+                formData.append('email',object.Email);
                 formData.append('departmentMember',object.Department);
                 formData.append('roleMember',object.Role);
                 break;
@@ -30,6 +29,5 @@ const useFormData = (method,section,object) =>{
                 break;
         }
         return formData;
-    // }
 }
 export default useFormData;

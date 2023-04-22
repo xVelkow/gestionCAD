@@ -1,7 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import useFetch from "../../components/useFetch";
+import useFetch from "../components/hooks/useFetch";
 import { useEffect, useState } from "react";
-import useDestroy from "../../components/useDestroy";
+import useDestroy from "../components/hooks/useDestroy";
+import NavBar from "../components/snippets/NavBar";
+
 const Show = ({section}) =>{
     const navigate = useNavigate();
     const {id} = useParams();
@@ -16,6 +18,7 @@ const Show = ({section}) =>{
     },[deleteChecker])
     return(
         <>
+        <NavBar />
             {isPending &&
                 <>
                     <h1>Loading...</h1>
@@ -23,7 +26,6 @@ const Show = ({section}) =>{
             }
             { (data.length !== 0 && !isPending) &&
                 <>
-                    <Link to={`/Dashboard/${section}`}>Go back</Link>
                     <div className="table-holder">
                         <div className="container">
                             <table className="data-wrapper">
@@ -47,13 +49,12 @@ const Show = ({section}) =>{
                                     <tr className='data-row'>
                                         <td><button onClick={
                                                 ()=>{
-                                                    // setDeleteTarget(data.id);
                                                     setDeleteChecker(true);
                                                     useDestroy(section,data.id);
                                                 }}>
                                                     Delete
                                             </button></td>
-                                        <td><Link to={`Edit`} className='button edit-button'>edit</Link></td>
+                                        <td><Link to={`Edit`} className='button edit-button'>Edit</Link></td>
                                     </tr>
                                 </tfoot>
                             </table>

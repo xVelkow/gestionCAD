@@ -1,0 +1,32 @@
+nav{
+    margin-bottom: 2em;
+    height: 4em;
+    padding: 0 1.5em;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3em;
+}
+nav ul li{
+    list-style: none;
+    font-size: 0.85em;
+}
+nav ul li a{
+    text-decoration: none;
+    color: black;
+}
+nav button{
+    border: none;
+    font-size: 0.8rem;
+    border-radius: 4px;
+    background-color: #5fa8d3;
+    color: white;
+    padding: 0.45em 1.5em;
+    cursor: pointer;
+}
