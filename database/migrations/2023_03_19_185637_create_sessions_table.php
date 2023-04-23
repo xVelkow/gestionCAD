@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sessions', function (Blueprint $table) {
-            $table->increments('id')->nullable(false);
-            $table->string('refSession')->unique()->nullable(false);
+            $table->increments('id');
+            $table->string('refSession')->unique();
         });
     }
 

@@ -11,6 +11,7 @@ const useFormData = (method,section,object) =>{
                 formData.append('email',object.Email);
                 formData.append('departmentMember',object.Department);
                 formData.append('roleMember',object.Role);
+                formData.append('sessionMember',object.Session);
                 break;
             case 'Sessions':
                 formData.append('refSession',object.Reference);
@@ -18,14 +19,17 @@ const useFormData = (method,section,object) =>{
             case 'Plannings':
                 formData.append('titlePlanning',object.Title);
                 formData.append('descriptionPlanning',object.Description);
+                formData.append('sessionPlanning',object.Session);
                 break;
             case 'Posts':
                 formData.append('titlePost',object.Title);
                 formData.append('descriptionPost',object.Description);
+                formData.append('sessionPost',object.Session);
                 break;
             case 'Departments':
                 formData.append('nameDepartment',object.Name);
                 formData.append('descriptionDepartment',object.Description);
+                formData.append('sessionDepartment',object.Session);
                 break;
         }
         return formData;

@@ -1,35 +1,28 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import useFormData from "../components/hooks/useFormData";
-import useValidate from "../components/hooks/useValidate";
-import NavBar from "../components/snippets/NavBar";
+import useFormData from "../hooks/useFormData";
+import useValidate from "../hooks/useValidate";
+import NavBar from "../components/NavBar";
+import useFetch from "../hooks/useFetch";
+import sectionFields from "../modules/sectionFields";
 const Create = ({section}) =>{
 	const navigate = useNavigate();
-	const obj = [
-		['Members',
-			[
-				'START',['Cef','Name','Email']
-			],
-			[
-				'START',['Department','Role','Session']
-			]
-		],
-		['Sessions','Reference'],
-		['Plannings','Title','Description'],
-		['Posts','Title','Description'],
-		['Departments','Name','Description']
-	];
+	const departments = useFetch('Departments');
+	const sessions = useFetch('Sessions');
+
+	const roles = ['Member','Manager','Vice-president','President'];
+
 	const needSlice = ['Members']; // whatever section needs to slice form
 	const selection = ['Department','Role','Session'];
-	const options = ['op1','op2', 'op3']
+	const options = ['op1','op2', 'op3'];
 	const [checked,setChecked] = useState(false);
 	const [object,setObject] = useState({})
   	const [showCase,setShowCase] = useState({state:''});
 
 	// fill object
 	useEffect(()=>{
-		obj.map(sections=>{
+		sectionFields.map(sections=>{
 			sections[0] !== section
 			? null
 			: sections.map(elements=>{
@@ -113,12 +106,24 @@ const Create = ({section}) =>{
 					<h2 className="form-title">Create new {section}</h2>
 					<div className={needSlice.includes(section) ? "form-wrapper" : null}>
 						{
-							obj.map(elements=>{return(
+							sectionFields.map(elements=>{return(
 								elements[0] !== section ? null : elements.map((element,index)=>{return(
 									index === 0 
 									? null 
 									: typeof(element) !== 'object'
-									? 
+									?
+									selection.includes(element)
+									?
+									<div className="selection-holder">
+										<select 
+										onChange={(e)=>setObject(prev=>({...prev,[element]: e.target.value}))}
+										>
+											<option value="">Choose a {element}</option>
+											{sessions.data.map(session=><option value={session.refSession}>{session.refSession}</option>)}
+										</select>
+										<br />
+									</div>
+									:
 									<div key={element} className="input-wrapper">
 									
 										<input 
@@ -146,9 +151,22 @@ const Create = ({section}) =>{
 													selection.includes(labelValue)
 													?
 													<div className="selection-holder">
-														<select name="" id="">
+														<select 
+														onChange={(e)=>setObject(prev=>({...prev,[labelValue]: e.target.value}))}
+														>
 															<option value="">Choose a {labelValue}</option>
-															{options.map((option)=><option>{option}</option>)}
+															{
+																labelValue === 'Department' &&
+																departments.data.map(department=><option value={department.nameDepartment}>{department.nameDepartment}</option>)
+															}
+															{
+																labelValue === 'Role' &&
+																roles.map(role=><option value={role}>{role}</option>)
+															}
+															{
+																labelValue === 'Session' &&
+																sessions.data.map(session=><option value={session.refSession}>{session.refSession}</option>)
+															}
 														</select>
 														<br />
 													</div>

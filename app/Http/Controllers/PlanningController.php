@@ -16,6 +16,7 @@ class PlanningController extends Controller
             $planning = new Planning();
             $planning->titlePlanning = $request->titlePlanning;
             $planning->descriptionPlanning = $request->descriptionPlanning;
+            $planning->sessionPlanning = $request->sessionPlanning;
             $planning->save();
             return response()->json(['isGood'=>true]);
     }
@@ -30,6 +31,7 @@ class PlanningController extends Controller
         $planning = Planning::find($id);
         $planning->titlePlanning = $request->titlePlanning;
         $planning->descriptionPlanning = $request->descriptionPlanning;
+        $planning->sessionPlanning = $request->sessionPlanning;
         $planning->save();
         return response()->json(['isGood'=>true]);
     }

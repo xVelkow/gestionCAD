@@ -22,8 +22,9 @@ class DepartmentRequest extends FormRequest
     {
         return [
             $request->validate([
-                'nameDepartment' => 'required',
-                'descriptionDepartment' => 'required'
+                'nameDepartment' => 'bail|required',
+                'descriptionDepartment' => 'bail|required',
+                'sessionDepartment' => 'bail|required'
             ])
         ];
     }

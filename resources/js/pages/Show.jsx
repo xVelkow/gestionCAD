@@ -1,8 +1,8 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import useFetch from "../components/hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
-import useDestroy from "../components/hooks/useDestroy";
-import NavBar from "../components/snippets/NavBar";
+import useDestroy from "../hooks/useDestroy";
+import NavBar from "../components/NavBar";
 
 const Show = ({section}) =>{
     const navigate = useNavigate();
@@ -10,6 +10,10 @@ const Show = ({section}) =>{
     const [deleteChecker,setDeleteChecker] = useState(false);
     const {data = {},isPending,error} = useFetch(`${section}/${id}`);
     
+    useEffect(()=>{
+		(!isPending && !error && data.length === 0) && navigate(`/Dashboard/${section}`)
+	},[isPending])
+
     // redirect when deleted
     useEffect(()=>{
         if(deleteChecker){

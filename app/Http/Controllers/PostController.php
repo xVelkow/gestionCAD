@@ -16,6 +16,7 @@ class PostController extends Controller
         $post = new Post();
         $post->titlePost = $request->titlePost;
         $post->descriptionPost = $request->descriptionPost;
+        $post->sessionPost = $request->sessionPost;
         $post->save();
         return response()->json(['isGood'=>true]);
     }
@@ -29,6 +30,7 @@ class PostController extends Controller
         $post = Post::find($id);
         $post->titlePost = $request->titlePost;
         $post->descriptionPost = $request->descriptionPost;
+        $post->sessionPost = $request->sessionPost;
         $post->save();
         return response()->json(['isGood'=>true]);
     }

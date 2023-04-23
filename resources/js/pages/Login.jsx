@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import useAuth from "../components/hooks/useAuth";
+import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 const Login = () =>{
     const [input,setInput] = useState({

@@ -24,8 +24,9 @@ class PlanningRequest extends FormRequest
     {
         return [
             $request->validate([
-                'titlePlanning' => 'required',
-                'descriptionPlanning' => 'required'
+                'titlePlanning' => 'bail|required',
+                'descriptionPlanning' => 'bail|required',
+                'sessionPlanning' => 'bail|required'
             ])
         ];
     }

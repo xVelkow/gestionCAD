@@ -25,9 +25,10 @@ class MemberRequest extends FormRequest
                 'id'=>['bail','string','required','between:13,13','alpha_num'],
                 'fullNameMember'=>['bail','string','required','max:100'],
                 'email'=>['bail','email','ends_with:@ofppt-edu.ma','required','max:100'],
-                'groupMember'=>['bail','string','required','max:25'],
+                'groupMember'=>['bail','string','max:25'],
                 'departmentMember'=>['bail','string','required','max:100'],
-                'roleMember'=>['bail','string','required','max:30']
+                'roleMember'=>['bail','string','required','max:30'],
+                'sessionMember' => ['bail','string','required','max:9']
             ])
         ];
     }

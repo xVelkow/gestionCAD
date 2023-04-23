@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('titlePost');
             $table->text('descriptionPost');
+            $table->string('sessionPost');
         });
     }
 

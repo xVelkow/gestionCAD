@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('titlePlanning');
             $table->text('descriptionPlanning');
+            $table->string('sessionPlanning');
         });
     }
 

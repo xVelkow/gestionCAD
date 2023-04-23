@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id');
             $table->string('nameDepartment');
             $table->text('descriptionDepartment');
+            $table->string('sessionDepartment');
         });
     }
 

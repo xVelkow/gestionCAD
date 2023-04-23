@@ -25,7 +25,8 @@ class PostRequest extends FormRequest
         return [
             $request->validate([
                 'titlePost' => 'required',
-                'descriptionPost' => 'required'
+                'descriptionPost' => 'required',
+                'sessionPost' => 'bail|required'
             ])
         ];
     }

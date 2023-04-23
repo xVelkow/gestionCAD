@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import useFetch from "../components/hooks/useFetch";
-import useDestroy from "../components/hooks/useDestroy";
-import NavBar from "../components/snippets/NavBar";
+import useFetch from "../hooks/useFetch";
+import useDestroy from "../hooks/useDestroy";
+import NavBar from "../components/NavBar";
 const Index = ({section}) =>{
     const [deleteTarget,setDeleteTarget] = useState(null);
     const [deleteChecker,setDeleteChecker] = useState(false);

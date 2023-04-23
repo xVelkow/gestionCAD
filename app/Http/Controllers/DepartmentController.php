@@ -22,6 +22,7 @@ class DepartmentController extends Controller
         $department = new Department();
         $department->nameDepartment = $request->nameDepartment;
         $department->descriptionDepartment = $request->descriptionDepartment;
+        $department->sessionDepartment = $request->sessionDepartment;
         $department->save();
         return response()->json(['isGood'=>true]);
     }
@@ -35,6 +36,7 @@ class DepartmentController extends Controller
         $department = Department::find($id);
         $department->nameDepartment = $request->nameDepartment;
         $department->descriptionDepartment = $request->descriptionDepartment;
+        $department->sessionDepartment = $request->sessionDepartment;
         $department->save();
         return response()->json(['isGood'=>true]);
     }
