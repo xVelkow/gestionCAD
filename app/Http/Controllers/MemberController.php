@@ -41,6 +41,7 @@ class MemberController extends Controller
             // if($member->roleMember == 'Super-Admin') return response()->json(['isGood'=>false]);
             $member->id = $request->id;
             $member->fullNameMember = $request->fullNameMember;
+            $member->groupMember = $request->groupMember;
             $member->email = $request->email;
             $member->departmentMember = $request->departmentMember;
             $member->roleMember = $request->roleMember;

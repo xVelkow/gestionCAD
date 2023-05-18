@@ -6,6 +6,21 @@ nav{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: white;
+}
+nav .left{
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+}
+nav .left .separator::before{
+    content: '';
+    position: absolute;
+    background-color: black;
+    width: 1px;
+    height: 100%;
+    top: 0;
 }
 nav ul{
     display: flex;
@@ -20,12 +35,14 @@ nav ul li{
 nav ul li a{
     text-decoration: none;
     color: black;
+    font-weight: 500;
+        
 }
 nav button{
     border: none;
     font-size: 0.8rem;
     border-radius: 4px;
-    background-color: #5fa8d3;
+    background-color: #407bff;
     color: white;
     padding: 0.45em 1.5em;
     cursor: pointer;

@@ -22,9 +22,9 @@ const Index = ({section}) =>{
 
             {/* Waiting for the response */}
             { isPending &&
-                <>
-                    <h1>Loading</h1>
-                </>
+                <div className="loader">
+                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                </div>
             }
             {/* Response ready */}
             { (data.length > 0 && !isPending) &&

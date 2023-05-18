@@ -1,4 +1,4 @@
-const useValidate = async (section,object) =>{
+const useValidate = async (section,object, status = 'updated') =>{
     let checked = false;
     let showObj = {};
     const allEmpty = await Object.values(object).every(v=>v == '');
@@ -22,7 +22,18 @@ const useValidate = async (section,object) =>{
                         const domainTest = domain.test(object.Email.toLowerCase());
                         if(domainTest){
                             if(object.Email.match(/\@/g).length === 1){
-                                checked = true;
+                                if(/^\D*$/.test(object.Name)){
+                                    showObj = {
+                                        state: 'alert-success',
+                                        message: `Member ${status} successfully`
+                                    }
+                                    checked = true;
+                                }else{
+                                    showObj = {
+                                        state: 'alert-fail',
+                                        message: 'Name should not contain any numbers'
+                                    }
+                                }
                             }else{
                                 showObj = {
                                     state: 'alert-fail',
@@ -48,24 +59,62 @@ const useValidate = async (section,object) =>{
                         const [sec1, sec2] = object.Reference.split('-');
                         if((+sec1) + 1 === (+sec2)){
                             checked = true;
+                            showObj = {
+                                state: 'alert-success',
+                                message: `Session ${status} successfully`
+                            }
                         }else{
                         showObj = {
                             state: 'alert-fail',
-                            message: 'Example: 2022-2023'
+                            message: 'Example: 2022-2023 | 1 year difference'
                         }
                         }
                     }
                     else{
                         showObj = {
                             state: 'alert-fail',
-                            message: 'Example: 2022-2023'
+                            message: 'Example: 2022-2023 | 1 year difference'
                         }
                     }
                     break;
                 case 'Plannings':
+                    showObj = {
+                        state: 'alert-success',
+                        message: `Planning ${status} successfully`
+                    }
                 case 'Posts':
+                    showObj = {
+                        state: 'alert-success',
+                        message: `Post ${status} successfully`
+                    }
                 case 'Departments':
+                    showObj = {
+                        state: 'alert-success',
+                        message: `Department ${status} successfully`
+                    }
                     checked = true;
+                    break;
+                case 'Password':
+                    if(object.newPassword.length >= 8){
+                        if(object.newPassword === object.confirmPassword){
+                            checked = true;
+                            showObj = {
+                                state: 'alert-success',
+                                message: `Password ${status} successfully`
+                            }
+                        }else{
+                            showObj = {
+                                state: 'alert-fail',
+                                message: `Passwords should be the same`
+                            }
+                        }
+                    }else{
+                        showObj = {
+                            state: 'alert-fail',
+                            message: `Password should be at least 8 characters long`
+                        }
+                    }
+                    
                     break;
             }
         }

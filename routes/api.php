@@ -8,6 +8,7 @@ use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,11 +23,10 @@ use App\Http\Controllers\AuthController;
 Route::post('login',[AuthController::class,'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[AuthController::class,'logout']);
-    Route::resources([
-            'Members' => MemberController::class,
-            'Sessions' => SessionController::class,
-            'Plannings' => PlanningController::class,
-            'Posts' => PostController::class,
-            'Departments' => DepartmentController::class
-        ]);
+    Route::resource('Members',MemberController::class); //->middleware('ability:admin,president,vice-president,communication')
+    Route::resource('Sessions',SessionController::class)->middleware('ability:admin,president,vice-president,communication,social-media');
+    Route::resource('Plannings',PlanningController::class)->middleware('ability:admin,president');
+    Route::resource('Posts',PostController::class)->middleware('ability:admin,president,vice-president,social-media');
+    Route::resource('Departments',DepartmentController::class); //->middleware('ability:admin,president,vice-president,communication')
+    Route::patch('/changePassword/{id}',[PasswordController::class,'change']);
 });

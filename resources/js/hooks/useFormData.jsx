@@ -31,6 +31,9 @@ const useFormData = (method,section,object) =>{
                 formData.append('descriptionDepartment',object.Description);
                 formData.append('sessionDepartment',object.Session);
                 break;
+            case 'Password':
+                formData.append('password',object.newPassword);
+                break;
         }
         return formData;
 }

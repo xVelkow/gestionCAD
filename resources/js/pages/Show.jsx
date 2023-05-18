@@ -23,11 +23,11 @@ const Show = ({section}) =>{
     return(
         <>
         <NavBar />
-            {isPending &&
-                <>
-                    <h1>Loading...</h1>
-                </>
-            }
+        { isPending &&
+            <div className="loader" >
+                <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+            </div>
+        }
             { (data.length !== 0 && !isPending) &&
                 <>
                     <div className="table-holder">

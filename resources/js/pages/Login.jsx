@@ -12,7 +12,7 @@ const Login = () =>{
         window.addEventListener('token',()=>{
             navigate('/Dashboard')
         })
-        localStorage.getItem('token') && navigate('/Dashboard');
+        sessionStorage.getItem('token') && navigate('/Dashboard');
     },[])
     return(
         <>

@@ -8,7 +8,7 @@ const useFetch = (request) =>{
     useEffect(()=>{
         axios.get(`http://127.0.0.1:8000/api/${request}/`,{
             headers:{
-                Authorization: `Bearer ${localStorage.getItem('token')}`
+                Authorization: `Bearer ${sessionStorage.getItem('token')}`
             }
         })
         .then(response=>{

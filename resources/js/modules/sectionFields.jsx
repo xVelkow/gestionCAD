@@ -4,7 +4,7 @@ const sectionFields = [
             'START',['Cef','Name','Email']
         ],
         [
-            'START',['Department','Role','Session']
+            'START',['Department','Role','Session','yassine']
         ]
     ],
     ['Sessions','Reference'],
@@ -12,4 +12,4 @@ const sectionFields = [
     ['Posts','Title','Description','Session'],
     ['Departments','Name','Description','Session']
 ];
-export default sectionFields;
+export default sectionFields
