@@ -4,7 +4,7 @@ const sectionFields = [
             'START',['Cef','Name','Email']
         ],
         [
-            'START',['Department','Role','Session','yassine']
+            'START',['Department','Role','Session']
         ]
     ],
     ['Sessions','Reference'],
