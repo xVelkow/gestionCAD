@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import useFetch from "../hooks/useFetch";
 import useDestroy from "../hooks/useDestroy";
 import NavBar from "../components/NavBar";
+import deleteSvg from '../assets/delete.png';
+import editSvg from '../assets/edit.svg';
+import showSvg from '../assets/show.png';
 const Index = ({section}) =>{
     const [deleteTarget,setDeleteTarget] = useState(null);
     const [deleteChecker,setDeleteChecker] = useState(false);
@@ -51,17 +54,30 @@ const Index = ({section}) =>{
                                     {Object.values(element).map(value=>{return(
                                         element.id != value ? <td key={value}>{value}</td> : null
                                 )})}
-                                        <td key='show'><button onClick={()=>navigate(`/Dashboard/${section}/${element.id}`)}>More</button></td>
-                                        <td key='edit'><button onClick={()=>navigate(`${element.id}/Edit`)}>Edit</button></td>
-                                        <td key='delete'>
-                                            <button onClick={
+                                        <td key='show'><center>
+                                            <img
+                                                src={showSvg}
+                                                width={'20pt'}
+                                                onClick={()=>navigate(`/Dashboard/${section}/${element.id}`)}/>
+                                        </center></td>
+                                        <td key='edit'><center>
+                                            <img
+                                                src={editSvg}
+                                                width={'20pt'}
+                                                onClick={()=>navigate(`${element.id}/Edit`)}
+                                            /></center>
+                                        </td>
+                                        <td key='delete'><center>
+                                            <img
+                                                src={deleteSvg}
+                                                width={'25pt'}
+                                                onClick={
                                                 ()=>{
                                                     setDeleteTarget(element.id);
                                                     setDeleteChecker(true);
                                                     useDestroy(section,element.id);
-                                                }}>
-                                                    Delete
-                                            </button>
+                                                }}
+                                            /></center>
                                         </td>
                                     </tr>
                                 )})
