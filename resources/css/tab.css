@@ -1,0 +1,21 @@
+.tab{
+    background-color: #FFF;
+    
+}
+.tab ul{
+    padding-left: 3em;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+    display: flex;
+    align-items: center;
+    gap: 2em;
+    margin-bottom: 1em;
+}
+.tab li{
+    list-style-type: none;
+    padding: 1.2em 1em;
+    cursor: pointer;
+}
+.tab-item-on{
+    font-weight: 600;
+    color: #407bff;
+}

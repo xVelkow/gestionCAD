@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+import logo from '../assets/logo.svg'
 const Login = () =>{
     const [input,setInput] = useState({
         email: '',
@@ -16,6 +17,7 @@ const Login = () =>{
     },[])
     return(
         <>
+        <img src={logo} width={'75pt'} style={{position: 'absolute', top: 0, left: 0, margin: '1em 0em 0 1em', cursor: 'pointer'}} />
         <div className="login">
             <div className="login-wrapper">
                 <h2 className="login-title">Login</h2>

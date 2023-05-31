@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\MemberRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use App\Mail\ChangePassword;
 use App\Models\Member;
 use Exception;
 
@@ -18,7 +20,7 @@ class MemberController extends Controller
     }
 
     public function store(MemberRequest $request){
-            $s = 'salam';
+            $s = Str::random(8);
             $member = new Member();
             $member->id = $request->id;
             $member->fullNameMember = $request->fullNameMember;
@@ -28,6 +30,7 @@ class MemberController extends Controller
             $member->roleMember = $request->roleMember;
             $member->sessionMember = $request->sessionMember;
             $member->save();
+            Mail::to($request->email)->send(new ChangePassword($request->fullNameMember,$s,$request->email));
             return response()->json(['isGood'=>true]);
     }
 

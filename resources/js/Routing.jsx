@@ -1,4 +1,5 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
+import Landing from "./pages/Landing";
 import Dashboard from "./pages/Dashboard";
 import Create from "./pages/Create";
 import Index from "./pages/Index";
@@ -21,6 +22,7 @@ const Routing = () =>{
     return(
         <>
             <Routes>
+                <Route path='/' element={<Landing />}/>
                 <Route path='/Login' element={<Login />}/>
                 { sessionStorage.getItem('token')
                 && 

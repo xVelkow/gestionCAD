@@ -8,11 +8,13 @@ import useFill from "../hooks/useFill";
 
 import useFetch from "../hooks/useFetch";
 const Form = ({section, object, check, checked, setObject, data = undefined, page}) =>{
-	const navigate = useNavigate()
-	const [stateRoles,setStateRoles] = useState(roles);
-	useFill(checked,setObject, section, data)
 	const departments = useFetch('Departments');
 	const sessions = useFetch('Sessions');
+	let i = 0;
+	const navigate = useNavigate()
+	const [stateRoles,setStateRoles] = useState(roles);
+	const [stateDepartments, setStateDepartments] = useState([])
+	useFill(checked,setObject, section, data)
 	const handle= (e)=>{
 		setObject(object=>({
 			...object,
@@ -21,14 +23,23 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
 	}
 
 	let x;
+	let y;
 	useEffect(()=>{
 		if(object.Department === 'Presidency'){
 			x = roles.filter(role=> ['President','Vice-president'].includes(role))
+			setStateRoles(x)
 		}else{
 			x = roles.filter(role=> ['Member','Manager'].includes(role))
+			setStateRoles(x)
 		}
-		setStateRoles(x)
+		if(object.Session){
+			y = departments.data.filter(department=>department.sessionDepartment == object.Session);
+			setStateDepartments(y)
+		}
 	},[object])
+	useEffect(()=>{
+		setStateDepartments(departments.data)
+	},[])
 	return(
         <>
             <div className='form-container'>
@@ -45,12 +56,22 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
 									selection.includes(element)
 									?
 									<div className="selection-holder">
+										
 										<select 
-										onChange={(e)=>setObject(prev=>({...prev,[element]: e.target.value}))}
+										onChange={(e)=>setObject(prev=>({...prev,'Session': e.target.value}))}
 										>
 											<option selected={!checked}>Choose a {element}</option>
 											{sessions.data.map(session=><option key={session.id} value={session.refSession} selected={typeof(data) === 'object'?((session.refSession === object.Session)?true:false):false}>{session.refSession}</option>)}
 										</select>
+										{
+										section === 'Posts' && 
+											<input
+												type='file'
+												multiple
+												onChange={(e)=>setObject(object=>({...object,'images': e.target.files}))}
+												style={{marginBottom:'1em', width: '17em'}}
+											/>
+										}
 										<br />
 									</div>
 									:
@@ -86,16 +107,16 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
 														>
 															<option value='' selected={!checked}>Choose a {labelValue}</option>
 															{
+																labelValue === 'Session' &&
+																sessions.data.map(session=><option key={session.id} value={session.refSession} selected={typeof(data) === 'object'?(session.refSession === data.sessionMember)? true : false:false}>{session.refSession}</option>)
+															}
+															{
 																labelValue === 'Department' &&
-																departments.data.map(department=><option key={department.id} value={department.nameDepartment} selected={typeof(data) === 'object'?((data.departmentMember === department.nameDepartment)? true:false):false}>{department.nameDepartment}</option>)
+																stateDepartments.map(department=><option key={department.id} value={department.nameDepartment} selected={typeof(data) === 'object'?((data.departmentMember === department.nameDepartment)? true:false):false}>{department.nameDepartment}</option>)
 															}
 															{
 																labelValue === 'Role' &&
 																stateRoles.map((role,index)=><option key={index} value={role} selected={typeof(data) ===  'object'?((role === data.roleMember)? true: false):false}>{role}</option>)
-															}
-															{
-																labelValue === 'Session' &&
-																sessions.data.map(session=><option key={session.id} value={session.refSession} selected={typeof(data) === 'object'?(session.refSession === data.sessionMember)? true : false:false}>{session.refSession}</option>)
 															}
 														</select>
 														<br />

@@ -1,4 +1,4 @@
-nav{
+.navBar{
     margin-bottom: 2em;
     height: 4em;
     padding: 0 1.5em;
@@ -8,13 +8,13 @@ nav{
     align-items: center;
     background-color: white;
 }
-nav .left{
+.navBar .left{
     position: relative;
     display: flex;
     align-items: center;
     gap: 1em;
 }
-nav .left .separator::before{
+.navBar .left .separator::before{
     content: '';
     position: absolute;
     background-color: black;
@@ -22,23 +22,23 @@ nav .left .separator::before{
     height: 100%;
     top: 0;
 }
-nav ul{
+.navBar .ull{
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 3em;
 }
-nav ul li{
+.navBar .ull li{
     list-style: none;
     font-size: 0.85em;
 }
-nav ul li a{
+.navBar .ull li a{
     text-decoration: none;
     color: black;
     font-weight: 500;
         
 }
-nav button{
+.navBar button{
     border: none;
     font-size: 0.8rem;
     border-radius: 4px;

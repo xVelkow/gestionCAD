@@ -10,6 +10,8 @@ use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PasswordController;
 
+
+use App\Http\Controllers\Dashboard;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,13 +22,14 @@ use App\Http\Controllers\PasswordController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::get('getM/{session}',[Dashboard::class,'getDashboardData']);
 Route::post('login',[AuthController::class,'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[AuthController::class,'logout']);
     Route::resource('Members',MemberController::class); //->middleware('ability:admin,president,vice-president,communication')
-    Route::resource('Sessions',SessionController::class)->middleware('ability:admin,president,vice-president,communication,social-media');
-    Route::resource('Plannings',PlanningController::class)->middleware('ability:admin,president');
-    Route::resource('Posts',PostController::class)->middleware('ability:admin,president,vice-president,social-media');
+    Route::resource('Sessions',SessionController::class); //->middleware('ability:admin,president,vice-president,communication,social-media')
+    Route::resource('Plannings',PlanningController::class); //->middleware('ability:admin,president')
+    Route::resource('Posts',PostController::class); //->middleware('ability:admin,president,vice-president,social-media')
     Route::resource('Departments',DepartmentController::class); //->middleware('ability:admin,president,vice-president,communication')
     Route::patch('/changePassword/{id}',[PasswordController::class,'change']);
 });
