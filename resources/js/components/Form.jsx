@@ -44,7 +44,7 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
         <>
             <div className='form-container'>
 				<div className={needSlice.includes(section) ? "form-holder" : "form-holder1"}>
-					<h2 className="form-title">Create new {section}</h2>
+					<h3 className="form-title">Create new {section}</h3>
 					<div className={needSlice.includes(section) ? "form-wrapper" : null}>
 						{
 							sectionFields.map(elements=>{return(
