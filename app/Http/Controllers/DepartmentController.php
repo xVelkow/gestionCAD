@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class DepartmentController extends Controller
 {
     public function index(){
-        $columns = ['id','nameDepartment'];
+        $columns = ['id','nameDepartment','sessionDepartment'];
         $departments = Department::all($columns);
         return response()->json($departments);
     }

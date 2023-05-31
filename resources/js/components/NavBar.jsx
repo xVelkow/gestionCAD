@@ -5,7 +5,7 @@ const NavBar = () =>{
     const navigate = useNavigate();
     return(
         <>
-            <nav>
+            <nav className="navBar">
                 <div className="left">
                     <img 
                     src={logo}
@@ -25,7 +25,7 @@ const NavBar = () =>{
                         }
                     >Dashboard</h3>
                 </div>
-                <ul>
+                <ul className="ull">
                     {
                         (
                             sessionStorage.getItem('department').toLocaleLowerCase() === 'communication'
@@ -55,10 +55,7 @@ const NavBar = () =>{
                     {
                         ['president','super-admin','vice-president'].includes(sessionStorage.getItem('role').toLocaleLowerCase())
                         &&
-                        <>
                             <li><Link to='/Dashboard/Sessions'>Session</Link></li>
-                            <li><Link to='/Dashboard/Meetings'>Meeting</Link></li>
-                        </>
                     }
                 </ul>
                 <div style={{display: 'flex', gap:'1.5em', alignItems: 'center'}}>
