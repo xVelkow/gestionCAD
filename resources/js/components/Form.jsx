@@ -38,7 +38,7 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
 			y = departments.data.filter(department=>department.sessionDepartment == object.Session);
 			setStateDepartments(y)
 		}
-	},[object])
+	},[object,sessions])
 	useEffect(()=>{
 		setStateDepartments(departments.data)
 	},[])
@@ -111,6 +111,7 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
 																labelValue === 'Session' &&
 																sessions.data.map(session=><option key={session.id} value={session.refSession} selected={typeof(data) === 'object'?(session.refSession === data.sessionMember)? true : false:false}>{session.refSession}</option>)
 															}
+															{/* {console.log(data)} */}
 															{
 																labelValue === 'Department' &&
 																stateDepartments.map(department=><option key={department.id} value={department.nameDepartment} selected={typeof(data) === 'object'?((data.departmentMember === department.nameDepartment)? true:false):false}>{department.nameDepartment}</option>)
