@@ -33,13 +33,32 @@ const [departments,setDepartments] = useState([]);
 const [plannings,setPlannings] = useState([]);
 const [posts,setPosts] = useState([]);
 useEffect(()=>{
+    axios.get(`http://127.0.0.1:8000/api/getM/${sess}`).then(({data})=>{
+        setMembers(data.data.members);
+        setDepartments(data.data.departments);
+        setPlannings(data.data.planning);
+        setPosts(data.data.posts);
+        setChecked(false)
+    }).catch(err=>console.log(err))
+},[])
+useEffect(()=>{
     if(checked){
         axios.get(`http://127.0.0.1:8000/api/getM/${sess}`).then(({data})=>{
             // setData(data.data)
-            setMembers(data.data.members.filter(member=>member.sessionMember == sess));
-            setDepartments(data.data.departments.filter(department=>department.sessionDepartment == sess));
-            setPlannings(data.data.planning.filter(planning=>planning.sessionPlanning == sess));
-            setPosts(data.data.posts.filter(post=>post.sessionPost == sess));
+            if(sess != "NONE"){
+                console.log('yey')
+                setMembers(data.data.members.filter(member=>member.sessionMember == sess));
+                setDepartments(data.data.departments.filter(department=>department.sessionDepartment == sess));
+                setPlannings(data.data.planning.filter(planning=>planning.sessionPlanning == sess));
+                setPosts(data.data.posts.filter(post=>post.sessionPost == sess));
+            }else{
+                console.log('none')
+                setMembers(data.data.members);
+        setDepartments(data.data.departments);
+        setPlannings(data.data.planning);
+        setPosts(data.data.posts);
+            }
+            
         }).catch(err=>console.log(err))
         setChecked(false)
     }
@@ -57,7 +76,7 @@ useEffect(()=>{
                     <li id='planning' className={tab.planning && 'tab-item-on'} onClick={checkTab}>Plannings</li>
                     <li style={{display: 'flex', gap: '.7em'}}>
                         <select name="" id="" onChange={(e)=>setSess(e.target.value)}>
-                            <option value="">Choose a session</option>
+                            <option value="NONE">Not Filtered</option>
                             {sessions.map(session=><option>{session.refSession}</option>)}
                         </select>
                         <img src={search} width={'25pt'} onClick={()=>setChecked(true)}/>
