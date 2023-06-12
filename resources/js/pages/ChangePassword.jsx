@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"
 import useValidate from "../hooks/useValidate"
 import useFormData from "../hooks/useFormData";
 import NavBar from "../components/NavBar";
+import { useNavigate } from "react-router-dom";
 const ChangePassword = () =>{
+    const navigate = useNavigate()
     const [object,setObject] = useState({
         newPassword: '',
         confirmPassword: ''
@@ -34,6 +36,7 @@ const ChangePassword = () =>{
 				}else{
 					console.log(res.data)
                     setChecked(false);
+                    navigate('/Dashboard')
 				}
 			})
 			.catch(err=>{

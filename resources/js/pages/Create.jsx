@@ -9,16 +9,14 @@ const Create = ({section}) =>{
 	const [checked,setChecked] = useState(false);
 	const [object,setObject] = useState({})
   	const [showCase,setShowCase] = useState({state:''});
-	
+	const [showObjX,setShowObjX] = useState({state: ''})
 	const check = ()=>{
 		const showObj = useValidate(section,object,'added');
 		showObj.then(res=>{
 			const [showObj, checked] = res;
 			setChecked(checked);
 			setShowCase({...showObj})
-			setTimeout(()=>{
-				setShowCase(showCase=>({...showCase, state:''}));
-			},2000);
+			setShowObjX({...showObj});
 		})
 	}
 
@@ -28,7 +26,9 @@ const Create = ({section}) =>{
 		if(checked){
 			axios.post(`http://127.0.0.1:8000/api/${section}`,formData,{
 				headers:{
-					Authorization: `Bearer ${sessionStorage.getItem('token')}`
+					Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+					'Content-Type': 'multipart/form-data',
+					// ['Content-Type'] : 'multipart/form-data'
 				}
 			})
 			.then(res=>{
@@ -39,13 +39,20 @@ const Create = ({section}) =>{
 				}
 			})
 			.then(data=>{
-				console.log(data);
 				setChecked(false);
+				setShowCase(showObjX)
+				setTimeout(()=>{
+					setShowCase(showCase=>({...showCase, state:''}));
+				},2000);
 			})
 			.catch(err=>{
-				console.clear();
-				console.log(err.response);
+				// console.clear();
+				console.log(err)
+				setShowCase({state:"alert-fail", message: `Something went wrong`})
 				setChecked(false);
+				setTimeout(()=>{
+					setShowCase(showCase=>({...showCase, state:''}));
+				},2000);
 			});
 		}
 	},[checked])

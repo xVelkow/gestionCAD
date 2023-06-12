@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('titlePost');
             $table->text('descriptionPost');
             $table->string('sessionPost');
+            $table->string('imagePost');
         });
     }
 

@@ -22,9 +22,11 @@ const useFormData = (method,section,object) =>{
                 formData.append('sessionPlanning',object.Session);
                 break;
             case 'Posts':
+                console.log(object)
                 formData.append('titlePost',object.Title);
                 formData.append('descriptionPost',object.Description);
                 formData.append('sessionPost',object.Session);
+                formData.append('imagePost',object.Image);
                 break;
             case 'Departments':
                 formData.append('nameDepartment',object.Name);

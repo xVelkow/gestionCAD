@@ -31,6 +31,7 @@ const {data: sessions, isPending, error} = useFetch('Sessions')
 const [members,setMembers] = useState([]);
 const [departments,setDepartments] = useState([]);
 const [plannings,setPlannings] = useState([]);
+const [posts,setPosts] = useState([]);
 useEffect(()=>{
     if(checked){
         axios.get(`http://127.0.0.1:8000/api/getM/${sess}`).then(({data})=>{
@@ -38,12 +39,15 @@ useEffect(()=>{
             setMembers(data.data.members.filter(member=>member.sessionMember == sess));
             setDepartments(data.data.departments.filter(department=>department.sessionDepartment == sess));
             setPlannings(data.data.planning.filter(planning=>planning.sessionPlanning == sess));
+            setPosts(data.data.posts.filter(post=>post.sessionPost == sess));
         }).catch(err=>console.log(err))
         setChecked(false)
     }
 },[checked])
     return(
         <>
+        <link rel="stylesheet" href="bootstrap.min.css"/>
+
             <NavBar />
             <nav className="tab">
                 <ul>
@@ -75,8 +79,18 @@ useEffect(()=>{
                         </div>
                     }
                     {
-                        tab.posts &&
-                        <h1>posts</h1>
+                        (tab.posts && posts) &&
+                        <div style={{display:'flex', flexWrap: 'wrap', gap: '1em', margin: '0 1em', paddingBottom: '1em'}}>
+                        {posts.map(post=>{return(
+                            <div className="card" style={{width: "14rem"}}>
+                                <img className="card-img-top" src={`images/${post.imagePost}`} alt="Card image cap"/>
+                                <div className="card-body">
+                                    <h6 className="card-title">{post.titlePost}</h6>
+                                    <p className="card-text" style={{fontSize:'.9rem'}}>{post.descriptionPost}</p>
+                                </div>
+                            </div>
+                        )})}
+                        </div>
                     }
                     {
                         (tab.members && members) &&

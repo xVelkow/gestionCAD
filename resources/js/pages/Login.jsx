@@ -2,11 +2,19 @@ import { useEffect, useState } from "react"
 import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/logo.svg'
+import axios from "axios";
 const Login = () =>{
     const [input,setInput] = useState({
         email: '',
         password: ''
     });
+    const [showCase, setShowCase] = useState({
+        state: "",
+        message: ""
+    })
+    const check = () =>{
+
+    }
     const navigate = useNavigate();
     
     useEffect(()=>{

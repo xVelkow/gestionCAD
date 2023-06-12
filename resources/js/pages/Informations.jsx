@@ -48,7 +48,7 @@ const Informations = () =>{
 				if(res.statusText !== "OK" || typeof(res.data) !== 'object'){
 					throw Error('Could not send data');
 				}else{
-					navigate(`/Dashboard/Members/${object.Cef}`);
+					navigate(`/Dashboard`);
 				}
 			})
 			.catch(err=>{

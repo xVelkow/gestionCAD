@@ -44,7 +44,7 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
         <>
             <div className='form-container'>
 				<div className={needSlice.includes(section) ? "form-holder" : "form-holder1"}>
-					<h3 className="form-title">Create new {section}</h3>
+					<h2 className="form-title">Create new {section}</h2>
 					<div className={needSlice.includes(section) ? "form-wrapper" : null}>
 						{
 							sectionFields.map(elements=>{return(
@@ -67,8 +67,7 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
 										section === 'Posts' && 
 											<input
 												type='file'
-												multiple
-												onChange={(e)=>setObject(object=>({...object,'images': e.target.files}))}
+												onChange={(e)=>setObject(object=>({...object,'Image': e.target.files[0]}))}
 												style={{marginBottom:'1em', width: '17em'}}
 											/>
 										}

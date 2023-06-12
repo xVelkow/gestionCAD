@@ -28,9 +28,11 @@ const Edit = ({section}) =>{
 	useEffect(()=>{
 		(!isPending && !error && data.length === 0) && navigate(`/Dashboard/${section}`)
 	},[isPending,data])
-
 	// validation
 	const check = ()=>{
+		if(section === "Posts" && object.Image == undefined){
+			setObject(prev=>({...prev, Image: data.imagePost}))
+		}
 		const showObj = useValidate(section,object);
 		showObj.then(res=>{
 			const [showObj, checked] = res;

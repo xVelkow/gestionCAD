@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Validator;
+
 class PostController extends Controller
 {
     public function index(){
@@ -17,6 +19,13 @@ class PostController extends Controller
         $post->titlePost = $request->titlePost;
         $post->descriptionPost = $request->descriptionPost;
         $post->sessionPost = $request->sessionPost;
+        $image = $request->file('imagePost');
+        // return response()->json([$request]);
+        $imageName = time().'.'.$image->extension();
+        $extension = $image->getClientOriginalExtension();
+        $filename = time().'.'.$extension;
+        $image->move(public_path('images'), $filename);
+        $post->imagePost = $filename;
         $post->save();
         return response()->json(['isGood'=>true]);
     }
@@ -27,10 +36,23 @@ class PostController extends Controller
     }
 
     public function update(PostRequest $request, Post $post, $id){
+        $validator = Validator::make($request->all(), [
+            'imagePost' => 'file|image'
+        ]);
         $post = Post::find($id);
         $post->titlePost = $request->titlePost;
         $post->descriptionPost = $request->descriptionPost;
         $post->sessionPost = $request->sessionPost;
+        if ($validator->passes()) {
+            $image = $request->file('imagePost');
+            $imageName = time().'.'.$image->extension();
+            $extension = $image->getClientOriginalExtension();
+            $filename = time().'.'.$extension;
+            $image->move(public_path('images'), $filename);
+            $post->imagePost = $filename;
+        }else{
+            $post->imagePost = $request->imagePost;
+        }
         $post->save();
         return response()->json(['isGood'=>true]);
     }

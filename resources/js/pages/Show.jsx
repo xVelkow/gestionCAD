@@ -3,6 +3,8 @@ import useFetch from "../hooks/useFetch";
 import { useEffect, useState } from "react";
 import useDestroy from "../hooks/useDestroy";
 import NavBar from "../components/NavBar";
+import deleteImg from "../assets/delete.png"
+import editImg from "../assets/edit.svg"
 
 const Show = ({section}) =>{
     const navigate = useNavigate();
@@ -51,14 +53,16 @@ const Show = ({section}) =>{
                                 </tbody>
                                 <tfoot className="data-action">
                                     <tr className='data-row'>
-                                        <td><button onClick={
+                                        <td><img 
+                                                src={deleteImg}
+                                                width={'25pt'}
+                                                style={{cursor:'pointer'}}
+                                                onClick={
                                                 ()=>{
                                                     setDeleteChecker(true);
                                                     useDestroy(section,data.id);
-                                                }}>
-                                                    Delete
-                                            </button></td>
-                                        <td><Link to={`Edit`} className='button edit-button'>Edit</Link></td>
+                                                }}/></td>
+                                        <td><Link to={`Edit`} className='button edit-button'><img src={editImg} width={'20pt'}/></Link></td>
                                     </tr>
                                 </tfoot>
                             </table>

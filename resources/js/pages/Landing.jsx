@@ -6,6 +6,8 @@ const Landing = () =>{
     const navigate = useNavigate();
     return(
     <div style={{}}>
+        <link rel="stylesheet" href="bootstrap.min.css"/>
+
         <img src={logo} width={'75pt'} style={{position: 'absolute', top: 0, left: 0, margin: '1em 2em'}} />
         <button style={{position: 'absolute', right: 0, top: 0, margin: '1em 2em 0 0', backgroundColor: '#407bff', border: 'none', padding: '.4em 1.2em', color: 'white', borderRadius: '4px'}}
             onClick={()=>navigate('/login')}

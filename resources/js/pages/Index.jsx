@@ -6,6 +6,7 @@ import NavBar from "../components/NavBar";
 import deleteSvg from '../assets/delete.png';
 import editSvg from '../assets/edit.svg';
 import showSvg from '../assets/show.png';
+import notfound from "../assets/404.svg";
 const Index = ({section}) =>{
     const [deleteTarget,setDeleteTarget] = useState(null);
     const [deleteChecker,setDeleteChecker] = useState(false);
@@ -57,12 +58,14 @@ const Index = ({section}) =>{
                                         <td key='show'><center>
                                             <img
                                                 src={showSvg}
+                                                style={{cursor: 'pointer'}}
                                                 width={'20pt'}
                                                 onClick={()=>navigate(`/Dashboard/${section}/${element.id}`)}/>
                                         </center></td>
                                         <td key='edit'><center>
                                             <img
                                                 src={editSvg}
+                                                style={{cursor: 'pointer'}}
                                                 width={'20pt'}
                                                 onClick={()=>navigate(`${element.id}/Edit`)}
                                             /></center>
@@ -70,6 +73,7 @@ const Index = ({section}) =>{
                                         <td key='delete'><center>
                                             <img
                                                 src={deleteSvg}
+                                                style={{cursor: 'pointer'}}
                                                 width={'25pt'}
                                                 onClick={
                                                 ()=>{
@@ -89,9 +93,43 @@ const Index = ({section}) =>{
             }
             {/* Could not find the needed data */}
             { (data.length === 0 && !isPending && !error) &&
-            <>
-                <h1>There are no {section}</h1>
-            </>
+            <div
+                style={{
+                    display:"flex",
+                    justifyContent:"center",
+                    marginTop: "3em"
+                }}
+            >
+                
+                <div style={{
+                    height:"23em",
+                    display:"flex",
+                    flexDirection: "column",
+                    justifyContent:"center",
+                    alignItems: "center",
+                    backgroundColor: "white",
+                    width: "30em",
+                    borderRadius: "8px",
+                    border: "1px solid #ccc"
+                }}>
+                    <h1
+                        style={{color: "#407bff"}}
+                    >There are no {section}</h1>
+                    <img src={notfound} width={'200pt'} alt="" />
+                    <button
+                        style={{
+                            marginLeft: ".4em",
+                            padding: ".8em 1.6em",
+                            border: "none",
+                            backgroundColor: "#407bff",
+                            color: "#fff",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                        }}
+                        onClick={()=>navigate('create')}
+                    >Create new {section}</button>
+                </div>
+            </div>
             }
             {/* Got some errors */}
             { error &&
