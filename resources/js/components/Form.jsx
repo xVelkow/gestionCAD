@@ -25,12 +25,14 @@ const Form = ({section, object, check, checked, setObject, data = undefined, pag
 	let x;
 	let y;
 	useEffect(()=>{
-		if(object.Department === 'Presidency'){
-			x = roles.filter(role=> ['President','Vice-president'].includes(role))
-			setStateRoles(x)
-		}else{
-			x = roles.filter(role=> ['Member','Manager'].includes(role))
-			setStateRoles(x)
+		if(object.Department){
+			if(object.Department.toLowerCase() === 'presidency'){
+				x = roles.filter(role=> ['President','Vice-president'].includes(role))
+				setStateRoles(x)
+			}else{
+				x = roles.filter(role=> ['Member','Manager'].includes(role))
+				setStateRoles(x)
+			}				
 		}
 		if(object.Session){
 			y = departments.data.filter(department=>department.sessionDepartment == object.Session);
