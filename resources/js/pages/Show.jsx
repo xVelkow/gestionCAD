@@ -46,7 +46,9 @@ const Show = ({section}) =>{
                                     Object.entries(data).map(element=>{return(
                                         <tr className='data-row' key={`${element[0]}-${element[1]}`}>
                                             <th key={element[0]}>{element[0]}</th>
-                                            <td key={element[1]}>{element[1]}</td>
+                                            {element[0] === "imagePost" 
+                                            ? <td><center><img src={`/images/${element[1]}`} width={'150pt'} /></center></td>
+                                            : <td key={element[1]}>{element[1]}</td>}
                                         </tr>
                                     )})
                                 }
