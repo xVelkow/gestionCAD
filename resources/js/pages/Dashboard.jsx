@@ -3,6 +3,8 @@ import NavBar from "../components/NavBar";
 import { useState, useEffect } from "react";
 import useFetch from '../hooks/useFetch';
 import search from '../assets/search.svg';
+import uploadImg from "../assets/upload.png"
+import { saveAs, FileSaver } from "file-saver";
 const Dashboard = () =>{
     const [checked, setChecked] = useState(false);
     const [sess,setSess] = useState()
@@ -32,6 +34,19 @@ const [members,setMembers] = useState([]);
 const [departments,setDepartments] = useState([]);
 const [plannings,setPlannings] = useState([]);
 const [posts,setPosts] = useState([]);
+
+// const getPdf = () =>{
+//     axios.get(`/api/getpdf/${sess}`,{headers:{Authorization: `Bearer ${sessionStorage.getItem('token')}`}})
+//     .then(res=>res.data)
+//     .then(data=>{
+//         const blob = new Blob([data], { type: 'application/pdf' });
+//         saveAs(blob, 'members.pdf');
+//         // const blob = new Blob([data], { type: 'application/pdf' });
+//         // saveAs(blob, 'exported.pdf');
+//     })
+// }
+
+
 useEffect(()=>{
     axios.get(`http://127.0.0.1:8000/api/getM/${sess}`).then(({data})=>{
         setMembers(data.data.members);
@@ -46,13 +61,11 @@ useEffect(()=>{
         axios.get(`http://127.0.0.1:8000/api/getM/${sess}`).then(({data})=>{
             // setData(data.data)
             if(sess != "NONE"){
-                console.log('yey')
                 setMembers(data.data.members.filter(member=>member.sessionMember == sess));
                 setDepartments(data.data.departments.filter(department=>department.sessionDepartment == sess));
                 setPlannings(data.data.planning.filter(planning=>planning.sessionPlanning == sess));
                 setPosts(data.data.posts.filter(post=>post.sessionPost == sess));
             }else{
-                console.log('none')
                 setMembers(data.data.members);
         setDepartments(data.data.departments);
         setPlannings(data.data.planning);
@@ -81,6 +94,7 @@ useEffect(()=>{
                         </select>
                         <img src={search} width={'25pt'} onClick={()=>setChecked(true)}/>
                         </li>
+                        {tab.members && <li><img src={uploadImg} width={'25pt'} onClick={getPdf}/></li>}
                     
                 </ul>
                 <div>

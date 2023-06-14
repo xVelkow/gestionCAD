@@ -24,6 +24,7 @@ use App\Http\Controllers\Dashboard;
 */
 Route::get('getM/{session}',[Dashboard::class,'getDashboardData']);
 Route::post('login',[AuthController::class,'login']);
+Route::get('getpdf/{session}',[MemberController::class,'exportData']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('logout',[AuthController::class,'logout']);
     Route::resource('Members',MemberController::class); //->middleware('ability:admin,president,vice-president,communication')

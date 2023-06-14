@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Mail\ChangePassword;
 use App\Models\Member;
 use Exception;
+use PDF;
 
 
 class MemberController extends Controller
@@ -18,7 +19,18 @@ class MemberController extends Controller
         $members = Member::where('roleMember','<>','Super-Admin')->get($columns);
         return response()->json($members);
     }
-
+    public function exportData($session){
+        $columns = ['id','fullNameMember', 'departmentMember', 'roleMember'];
+        $members = [];
+        if($session == "NONE"){
+            $members = Member::all($columns)->where('id','<>',0);
+        }else{
+            $members = Member::all($columns)->where('sessionMember','=',$session)->where('id','<>',0);
+        }
+        $pdf = PDF::loadView('pdf',['members'=> $members]);
+        return $pdf->download('members.pdf');
+        // return response()->json([$members]);
+    }
     public function store(MemberRequest $request){
             $s = Str::random(8);
             $member = new Member();
