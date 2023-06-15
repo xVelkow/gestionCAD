@@ -35,17 +35,6 @@ const [departments,setDepartments] = useState([]);
 const [plannings,setPlannings] = useState([]);
 const [posts,setPosts] = useState([]);
 
-// const getPdf = () =>{
-//     axios.get(`/api/getpdf/${sess}`,{headers:{Authorization: `Bearer ${sessionStorage.getItem('token')}`}})
-//     .then(res=>res.data)
-//     .then(data=>{
-//         const blob = new Blob([data], { type: 'application/pdf' });
-//         saveAs(blob, 'members.pdf');
-//         // const blob = new Blob([data], { type: 'application/pdf' });
-//         // saveAs(blob, 'exported.pdf');
-//     })
-// }
-
 
 useEffect(()=>{
     axios.get(`http://127.0.0.1:8000/api/getM/${sess}`).then(({data})=>{
@@ -94,7 +83,6 @@ useEffect(()=>{
                         </select>
                         <img src={search} width={'25pt'} onClick={()=>setChecked(true)}/>
                         </li>
-                        {tab.members && <li><img src={uploadImg} width={'25pt'} onClick={getPdf}/></li>}
                     
                 </ul>
                 <div>
